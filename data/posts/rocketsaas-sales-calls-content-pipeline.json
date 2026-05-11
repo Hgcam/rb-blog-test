@@ -122,7 +122,7 @@
   "_ingest": {
     "run_id": "019e180a-2b07-0f6f-a437-befe329ffea3",
     "task_id": "019e1604-0ad5-e71a-06f6-ddd0581d2438",
-    "ingested_at": "2026-05-11T17:16:30.106Z",
+    "ingested_at": "2026-05-11T17:16:39.399Z",
     "source": "rightbrain-webhook"
   }
 }
