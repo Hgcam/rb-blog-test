@@ -197,6 +197,8 @@ hr {
 .site-header__logo-mark {
   width: 28px;
   height: 28px;
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 .site-header__logo-name {

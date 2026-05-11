@@ -48,12 +48,13 @@ export function render(template, data, partials = {}) {
     return render(partial, data, partials);
   });
 
-  // ── {{#if var}} … {{/if}} ──────────────────────────────────────
-  // Supports single-level only; nesting not required by the template grammar.
+  // ── {{#if var}} … {{else}} … {{/if}} ─────────────────────────
+  // Supports optional {{else}} block; nesting not required by the template grammar.
   result = result.replace(/\{\{#if\s+([\w.]+)\s*\}\}([\s\S]*?)\{\{\/if\}\}/g, (_m, path, inner) => {
     const val = get(data, path);
-    if (!val || (Array.isArray(val) && val.length === 0)) return '';
-    return render(inner, data, partials);
+    const [thenBlock, elseBlock = ''] = inner.split('{{else}}');
+    if (!val || (Array.isArray(val) && val.length === 0)) return render(elseBlock, data, partials);
+    return render(thenBlock, data, partials);
   });
 
   // ── {{#unless var}} … {{/unless}} ─────────────────────────────

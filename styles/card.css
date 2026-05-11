@@ -21,13 +21,13 @@
   border-radius: var(--radius-2xl);
   overflow: hidden;
   box-shadow: var(--shadow-xs);
-  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
 }
 
 .post-card:hover {
   box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-  border-color: var(--border-primary);
+  transform: translateY(-3px);
+  border-color: var(--border-brand);
 }
 
 /* ── Link wrapper (covers whole card) ───────────────── */
