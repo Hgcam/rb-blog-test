@@ -10,7 +10,7 @@
 
 /* Single-column layout — sidebar reserved for future use */
 .post-page__layout {
-  max-width: 780px;
+  width: 100%;
 }
 
 /* ── Breadcrumb ──────────────────────────────────────── */
