@@ -8,9 +8,9 @@ compatibility_date = "2024-01-01"
 #   npx wrangler secret put GITHUB_TOKEN
 # Set plain vars here or in the dashboard:
 [vars]
-GITHUB_OWNER     = ""        # e.g. "rightbrainai"
-GITHUB_REPO      = ""        # e.g. "blog"
+GITHUB_OWNER     = "Hgcam"
+GITHUB_REPO      = "rb-blog-test"
 GITHUB_BRANCH    = "main"
-BLOG_DATA_PATH   = "blog/data/posts"
-ROUTE_PREFIX     = "/resources"
+BLOG_DATA_PATH   = "data/posts"
+ROUTE_PREFIX     = "/rb-blog-test"
 TASK_HREF_PREFIX = "/blog"
