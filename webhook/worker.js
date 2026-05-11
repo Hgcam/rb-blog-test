@@ -54,14 +54,9 @@ export default {
       return new Response('Skipped (is_error)', { status: 200 });
     }
 
-    // Debug: log top-level shape so we can diagnose payload issues
-    console.log('payload top-level keys:', JSON.stringify(Object.keys(run)));
-    console.log('run.id:', run.id, '| run.status:', run.status, '| run.is_error:', run.is_error);
-    console.log('run.response type:', typeof run.response, '| has post.slug:', !!(run.response?.post?.slug));
-
     const output = run.response;
     if (!output?.post?.slug) {
-      console.error('Missing response.post.slug — full payload:', JSON.stringify(run).slice(0, 500));
+      console.error('Missing response.post.slug in payload');
       return new Response('Missing post.slug', { status: 422 });
     }
 
@@ -107,7 +102,7 @@ export default {
 
     // Collect all image files from run.files
     const imageFiles = (run.files || []).filter(f => isImageFile(f.original_filename || f.stored_filename || ''));
-    console.log(`Image files found: ${imageFiles.length}`, imageFiles.map(f => f.original_filename));
+    console.log(`Image files found: ${imageFiles.length}`);
 
     // Collect all image keys referenced in the output
     const referencedKeys = new Set();
@@ -119,6 +114,7 @@ export default {
     if (output.post?.seo?.og_image && isImageFile(output.post.seo.og_image)) referencedKeys.add(output.post.seo.og_image);
     if (output.card?.thumbnail     && isImageFile(output.card.thumbnail))     referencedKeys.add(output.card.thumbnail);
     console.log('data-blog-image keys in output:', JSON.stringify([...referencedKeys]));
+    console.log('Available image slugs:', JSON.stringify(Object.keys(committedImages).filter(k => !k.includes(' '))));
 
     // Download & commit each image file, track public path by every key that matches
     const committedImages = {}; // data-blog-image key → public URL path
@@ -156,8 +152,10 @@ export default {
         continue;
       }
 
-      // Commit to GitHub using original_filename (spaces replaced with dashes for safe URLs)
-      const safeFilename = f.original_filename.replace(/\s+/g, '-');
+      // Commit to GitHub using original_filename sanitised for safe URLs
+      const safeFilename = f.original_filename
+        .replace(/\s+/g, '-')       // spaces → single dash
+        .replace(/-{2,}/g, '-');    // collapse multiple consecutive dashes
       const imgRepoPath  = `public/images/${slug}/${safeFilename}`;
       const imgApiUrl    = `https://api.github.com/repos/${owner}/${repo}/contents/${imgRepoPath}`;
 
@@ -197,7 +195,6 @@ export default {
     }
 
     // ── 5. Rewrite image references in the output ─────────────────
-    console.log('committedImages keys:', JSON.stringify(Object.keys(committedImages)));
     if (Object.keys(committedImages).length > 0) {
       if (output.post?.body_html) {
         output.post.body_html = output.post.body_html.replace(
