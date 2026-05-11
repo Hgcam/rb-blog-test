@@ -8,18 +8,9 @@
   padding-bottom: var(--space-10xl);
 }
 
-/* Two-column layout on wide screens: article + sidebar */
+/* Single-column layout — sidebar reserved for future use */
 .post-page__layout {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-7xl);
-  align-items: start;
-}
-
-@media (min-width: 1080px) {
-  .post-page__layout {
-    grid-template-columns: minmax(0, 1fr) 280px;
-  }
+  max-width: 780px;
 }
 
 /* ── Breadcrumb ──────────────────────────────────────── */
