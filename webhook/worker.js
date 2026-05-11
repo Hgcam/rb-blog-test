@@ -114,7 +114,6 @@ export default {
     if (output.post?.seo?.og_image && isImageFile(output.post.seo.og_image)) referencedKeys.add(output.post.seo.og_image);
     if (output.card?.thumbnail     && isImageFile(output.card.thumbnail))     referencedKeys.add(output.card.thumbnail);
     console.log('data-blog-image keys in output:', JSON.stringify([...referencedKeys]));
-    console.log('Available image slugs:', JSON.stringify(Object.keys(committedImages).filter(k => !k.includes(' '))));
 
     // Download & commit each image file, track public path by every key that matches
     const committedImages = {}; // data-blog-image key → public URL path
