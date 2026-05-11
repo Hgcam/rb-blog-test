@@ -6,6 +6,7 @@ compatibility_date = "2024-01-01"
 # Set these as encrypted secrets via the Cloudflare dashboard or:
 #   npx wrangler secret put WEBHOOK_SECRET
 #   npx wrangler secret put GITHUB_TOKEN
+#   npx wrangler secret put RB_API_KEY
 # Set plain vars here or in the dashboard:
 [vars]
 GITHUB_OWNER     = "Hgcam"
@@ -14,3 +15,4 @@ GITHUB_BRANCH    = "main"
 BLOG_DATA_PATH   = "data/posts"
 ROUTE_PREFIX     = "/rb-blog-test"
 TASK_HREF_PREFIX = "/blog"
+RB_API_URL       = "https://stag.leftbrain.me/api/v1"
