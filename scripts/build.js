@@ -158,12 +158,14 @@ async function main() {
     if (!parsed.post.tags) parsed.post.tags = [];
     if (!parsed.post.published_at) parsed.post.published_at = '';
 
-    // Rewrite card_html href prefix if it doesn't match config routePrefix
-    // e.g. task emits /blog/<slug>/ but site is served at /resources/<slug>/
-    const TASK_PREFIX = '/blog';
-    if (parsed.card?.card_html && site.routePrefix !== TASK_PREFIX) {
-      parsed.card.card_html = parsed.card.card_html
-        .split(`href="${TASK_PREFIX}/`).join(`href="${site.routePrefix}/`);
+    // Rewrite card_html href to always use the current routePrefix,
+    // regardless of what prefix the task or fixture wrote originally.
+    if (parsed.card?.card_html && parsed.post?.slug) {
+      const slug = parsed.post.slug;
+      parsed.card.card_html = parsed.card.card_html.replace(
+        new RegExp(`href="[^"]*/${slug}/"`, 'g'),
+        `href="${site.routePrefix}/${slug}/"`
+      );
     }
 
     posts.push({ ...parsed, _mtime: mtime, _file: file });
