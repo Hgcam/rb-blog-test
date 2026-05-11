@@ -168,6 +168,15 @@ async function main() {
       );
     }
 
+    // Inject data-tags onto the <article> so client-side filtering can read them.
+    if (parsed.card?.card_html && parsed.post?.tags?.length) {
+      const tagsAttr = parsed.post.tags.join(',');
+      parsed.card.card_html = parsed.card.card_html.replace(
+        /(<article\b[^>]*)(>)/,
+        `$1 data-tags="${tagsAttr}"$2`
+      );
+    }
+
     posts.push({ ...parsed, _mtime: mtime, _file: file });
   }
 

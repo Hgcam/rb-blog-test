@@ -19,6 +19,43 @@
 
 {{footer}}
 
+<!-- Tag filter — reads ?tag= and shows/hides cards + marks active chip -->
+<script>
+(function () {
+  var tag = new URLSearchParams(window.location.search).get('tag') || '';
+  if (!tag) return;
+
+  // Hide cards that don't include this tag
+  var cards = document.querySelectorAll('.card-grid .post-card[data-tags]');
+  var visible = 0;
+  cards.forEach(function (card) {
+    var tags = card.getAttribute('data-tags').split(',');
+    if (tags.indexOf(tag) === -1) {
+      card.style.display = 'none';
+    } else {
+      visible++;
+    }
+  });
+
+  // Show empty state if nothing matched
+  if (visible === 0) {
+    var grid = document.querySelector('.card-grid');
+    if (grid) {
+      grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--text-tertiary);padding:var(--space-9xl) 0">No posts for this topic yet — check back soon.</p>';
+    }
+  }
+
+  // Mark the matching chip as active
+  var chips = document.querySelectorAll('.filter-chips a');
+  chips.forEach(function (chip) {
+    var chipTag = new URLSearchParams(new URL(chip.href).search).get('tag') || '';
+    var isActive = chipTag === tag;
+    chip.classList.toggle('tag--active', isActive);
+    chip.setAttribute('aria-current', isActive ? 'true' : 'false');
+  });
+})();
+</script>
+
 <!-- Theme toggle — ~600 bytes, no deps -->
 <script>
 (function () {
