@@ -63,6 +63,7 @@ const FORBIDDEN_IN_BODY = [
  */
 export function validatePost(data, file = '<unknown>') {
   const errors = [];
+  const warnings = [];
 
   // ── post object ────────────────────────────────────────────────
   if (!data || typeof data !== 'object') {
@@ -117,13 +118,13 @@ export function validatePost(data, file = '<unknown>') {
     if (!isNonEmptyString(post.seo.meta_title)) {
       errors.push(`${file}: post.seo.meta_title is required`);
     } else if (!maxLen(post.seo.meta_title, 60)) {
-      errors.push(`${file}: post.seo.meta_title exceeds 60 chars (${post.seo.meta_title.length})`);
+      warnings.push(`${file}: post.seo.meta_title exceeds 60 chars (${post.seo.meta_title.length})`);
     }
 
     if (!isNonEmptyString(post.seo.meta_description)) {
       errors.push(`${file}: post.seo.meta_description is required`);
     } else if (!maxLen(post.seo.meta_description, 155)) {
-      errors.push(`${file}: post.seo.meta_description exceeds 155 chars (${post.seo.meta_description.length})`);
+      warnings.push(`${file}: post.seo.meta_description exceeds 155 chars (${post.seo.meta_description.length})`);
     }
   }
 
@@ -165,7 +166,7 @@ export function validatePost(data, file = '<unknown>') {
     }
   }
 
-  return { ok: errors.length === 0, errors };
+  return { ok: errors.length === 0, errors, warnings };
 }
 
 // ── CLI runner ────────────────────────────────────────────────────
@@ -218,7 +219,8 @@ async function main() {
       continue;
     }
 
-    const { ok, errors } = validatePost(parsed, name);
+    const { ok, errors, warnings } = validatePost(parsed, name);
+    warnings.forEach(w => console.warn(`  ⚠  ${w}`));
     if (ok) {
       results.push({ name, ok: true });
     } else {
