@@ -91,11 +91,17 @@ export default {
     const rbApiUrl = (env.RB_API_URL || '').replace(/\/$/, '');
     const rbApiKey = env.RB_API_KEY  || '';
 
-    // Build stored_filename → download_url map from run.files (images only)
+    // Map both original_filename and stored_filename → download_url.
+    // The task model writes data-blog-image using the original filename the user
+    // uploaded, but the API stores files under a UUID-based stored_filename.
     const fileMap = {};
     if (Array.isArray(run.files)) {
       for (const f of run.files) {
-        if (f.stored_filename && f.download_url && isImageFile(f.stored_filename)) {
+        if (!f.download_url) continue;
+        if (f.original_filename && isImageFile(f.original_filename)) {
+          fileMap[f.original_filename] = f.download_url;
+        }
+        if (f.stored_filename && isImageFile(f.stored_filename)) {
           fileMap[f.stored_filename] = f.download_url;
         }
       }
