@@ -1,0 +1,140 @@
+{
+  "card": {
+    "card_html": "<article class=\"post-card\">\n  <a class=\"post-card__link\" href=\"/rb-blog-test/rocketsaas-rightbrain-turning-sales-calls-into-content/\">\n    <figure class=\"post-card__media\"></figure>\n    <div class=\"post-card__body\">\n      <p class=\"post-card__eyebrow\">Case Study</p>\n      <h3 class=\"post-card__title\">RocketSaaS × Rightbrain: Turning Sales Calls into Content</h3>\n      <p class=\"post-card__summary\">See how RocketSaaS built two automated Rightbrain pipelines that turn call transcripts into consistent content and actionable ops outputs.</p>\n      <ul class=\"post-card__tags\"><li>case-study</li><li>rightbrain</li><li>workflows</li><li>content-ops</li><li>sales-calls</li></ul>\n    </div>\n  </a>\n</article>",
+    "summary": "See how RocketSaaS built two automated Rightbrain pipelines that turn call transcripts into consistent content and actionable ops outputs.",
+    "tags": [
+      "case-study",
+      "rightbrain",
+      "workflows",
+      "content-ops",
+      "sales-calls"
+    ],
+    "thumbnail": "",
+    "title": "RocketSaaS × Rightbrain: Turning Sales Calls into Content",
+    "type": "Case Study"
+  },
+  "copyedit": {
+    "issues": [
+      {
+        "after": "The problem",
+        "before": "THE PROBLEM",
+        "category": "style",
+        "rationale": "Converted shouty caps to sentence case for readability."
+      },
+      {
+        "after": "The workflow",
+        "before": "THE WORKFLOW",
+        "category": "style",
+        "rationale": "Converted shouty caps to sentence case for consistency with other headings."
+      },
+      {
+        "after": "What changed",
+        "before": "WHAT CHANGED",
+        "category": "style",
+        "rationale": "Normalized heading case."
+      },
+      {
+        "after": "What’s next",
+        "before": "WHAT’S NEXT",
+        "category": "style",
+        "rationale": "Normalized heading case."
+      },
+      {
+        "after": "Who this is for",
+        "before": "WHO THIS IS FOR",
+        "category": "style",
+        "rationale": "Normalized heading case."
+      },
+      {
+        "after": "newsletter angles—all shaped",
+        "before": "newsletter angles - all shaped",
+        "category": "style",
+        "rationale": "Replaced hyphen used as a dash with a true em dash."
+      },
+      {
+        "after": "Google Sheets repository",
+        "before": "Google Sheets repo",
+        "category": "style",
+        "rationale": "Expanded informal abbreviation to formal wording."
+      },
+      {
+        "after": "roughly five calls per month",
+        "before": "roughly 5 calls per month",
+        "category": "style",
+        "rationale": "Spelled out numbers under 10 per style guide."
+      },
+      {
+        "after": "are applied to every call—no more variation",
+        "before": "applied to every call. No more variation",
+        "category": "grammar",
+        "rationale": "Joined fragments for smoother flow and correct clause linkage."
+      },
+      {
+        "after": "Hours previously spent on manual extraction now go to what requires strategic judgement—spotting trends across the dataset, shaping the content narrative, and deciding what the business needs to say next.",
+        "before": "The hours previously spent on manual extraction are now spent on what actually requires strategic judgement - spotting trends across the dataset, shaping the content narrative, deciding what the business needs to say next.",
+        "category": "style",
+        "rationale": "Tightened wording and replaced hyphen with em dash."
+      },
+      {
+        "after": "The team has a searchable repository of structured insight from every discovery call—not a folder of recordings, but a queryable dataset that feeds into quarterly trend analysis and market positioning.",
+        "before": "The team now has a searchable repository of structured insight from every discovery call, not a folder of recordings, but a queryable dataset that feeds into quarterly trend analysis and market positioning.",
+        "category": "style",
+        "rationale": "Removed filler and clarified contrast with an em dash."
+      },
+      {
+        "after": "sending access requests",
+        "before": "getting access requests out",
+        "category": "style",
+        "rationale": "Replaced informal phrasing with concise verb."
+      },
+      {
+        "after": "CRM enrichment: all new leads are automatically enriched to provide context for marketing and sales.",
+        "before": "CRM enrichment: All new leads are automatically enriched to provide\ncontext for marketing and sales",
+        "category": "formatting",
+        "rationale": "Lowercased after the colon and added terminal period for list consistency."
+      },
+      {
+        "after": "ABM: enriching account lists for more accurate targeting in client ad accounts and tailored, automated outreach campaigns.",
+        "before": "ABM: Enriching account lists to be used for more accurate targeting in\nclient ad accounts and tailored, automated outreach campaigns.",
+        "category": "style",
+        "rationale": "Tightened wording and lowercased after the colon for parallelism."
+      }
+    ],
+    "stats": {
+      "by_category": {
+        "formatting": 2,
+        "grammar": 1,
+        "style": 11,
+        "typo": 0
+      },
+      "total_issues": 14
+    }
+  },
+  "post": {
+    "body_html": "<h2>The problem</h2>\n<p>RocketSaaS runs a high volume of calls: discovery sessions, client strategy meetings, podcast recordings, and kick-offs. Each one generates raw material—market signals, buyer pain points, positioning cues, and content angles. Turning that material into something useful was a manual job. Jamie, Director of Strategy, would periodically re-listen to a handful of calls, build a meta prompt, and piece together an analysis in ChatGPT. Doing it well took 30–60 minutes per session, so it happened monthly at most and only for a handful of calls.</p>\n<p>The problem wasn’t just time. Even with a consistent prompt, outputs varied from call to call. There was no guarantee the analysis would surface the same categories, use the same structure, or apply the same lens to every conversation. The result was a process that was too slow to run consistently and too inconsistent to build on. Most of the insight stayed locked in recordings. The bottleneck wasn’t having things to say. It was the work of turning conversations into content.</p>\n<h2>The workflow</h2>\n<h3>One system, two pipelines</h3>\n<p>RocketSaaS built two separate Rightbrain workflows, each routing a different call type to a different destination. Both run automatically via Fathom the moment a call ends.</p>\n<h3>Pipeline 1: Discovery calls → content engine</h3>\n<p>When a discovery call completes, an agent pulls the transcript and extracts structured insight: why the prospect is in market, how they heard about RocketSaaS, which channels they care about, what challenges they are facing, and what that signals about broader market trends.</p>\n<p>Each extraction goes into a structured Google Sheets repository, building over time into a dataset of every discovery conversation the team has had. A second agent runs across this dataset to identify patterns: which problems are coming up repeatedly, which channels are gaining momentum, and what language prospects are using to describe their pain.</p>\n<p>Those insights feed directly into content ideation. Posts, podcast episodes, and newsletter angles—all shaped by what real prospects are saying, on brand, consistent every time, with tone of voice and brand guidelines baked into the agent from the start.</p>\n<h3>Pipeline 2: Client calls → ops and strategy</h3>\n<p>When a kick-off or strategy call ends, a separate workflow routes the transcript into ops. Action items are extracted and pushed to Slack as notifications, ensuring nothing from the call falls through the cracks regardless of who was in the room. This pipeline also feeds into client Notion workspaces and Google Docs, building out strategy documentation, next steps, and follow-up material directly from the call rather than from scratch after it.</p>\n<p>The content team still does a final review pass before anything is published. The difference is they are editing and choosing, not staring at a blank page.</p>\n<h2>What changed</h2>\n<ul>\n<li>Every call is now analysed. Before, the team reviewed roughly five calls per month and only when someone had time. Now every call is processed automatically with no manual triggering.</li>\n<li>Outputs are consistent. The same structure, the same categories, and the same brand voice are applied to every call—no more variation from session to session or prompt drift between analyses.</li>\n<li>Jamie’s time moved upstream. Hours previously spent on manual extraction now go to what requires strategic judgement—spotting trends across the dataset, shaping the content narrative, and deciding what the business needs to say next.</li>\n<li>The team has a searchable repository of structured insight from every discovery call—not a folder of recordings, but a queryable dataset that feeds into quarterly trend analysis and market positioning.</li>\n<li>Content quality and consistency have improved. Better insight in means better content out, with a direct impact on engagement and inbound demo bookings.</li>\n</ul>\n<h2>What’s next</h2>\n<h3>Kick-off call → strategy and onboarding</h3>\n<p>The discovery-to-content pipeline proved the model. RocketSaaS is building a third workflow that takes the same approach deeper into client delivery.</p>\n<p>When a new client kick-off call ends, the agent will take the transcript alongside the kick-off document and begin strategy preparation automatically: pulling together research, drafting the initial messaging framework, starting the audit, creating and assigning onboarding tasks in Asana, sending access requests, setting up workspaces, and briefing the right people.</p>\n<p>The account director arrives at the strategy stage with a brief already built and the admin already handled, instead of spending the first week assembling the inputs manually. The same system. A different call type. A different destination. Running in the background.</p>\n<h2>Who this is for</h2>\n<p>This workflow applies anywhere a team runs a high volume of calls—discovery, strategy, client, or internal—and finds that the insight generated rarely makes it further than the recording.</p>\n<p>It is particularly effective for agencies and service businesses where the people with the most context (heads of strategy, account directors, and senior consultants) are also the ones doing ad hoc manual extraction work—taking insights from one place and plugging them into an LLM. Automating that layer frees them to do what actually requires their expertise.</p>\n<p>If your team already uses Fathom, Notion, Slack, or Google Docs, there is nothing new to learn. The pipeline runs inside the tools you already use.</p>\n<h2>How else are marketing agencies using Rightbrain?</h2>\n<p>With Rightbrain, it is about stacking different agents on your way to becoming AI-native. Here are other agents marketing agencies have been building:</p>\n<ul>\n<li>CRM enrichment: all new leads are automatically enriched to provide context for marketing and sales.</li>\n<li>ABM: enriching account lists for more accurate targeting in client ad accounts and tailored, automated outreach campaigns.</li>\n</ul>\n<p>See this running in your stack. We will map your current call workflow and build the first pipeline with you in a single session. <a href=\"https://rightbrain.ai/demo\">https://rightbrain.ai/demo</a></p>",
+    "published_at": "2026-05-11",
+    "reading_time_minutes": 5,
+    "seo": {
+      "meta_description": "Two automated pipelines analyse every call, push actions to ops, and feed a searchable dataset for content and strategy.",
+      "meta_title": "RocketSaaS Turns Calls into Content with Rightbrain",
+      "og_image": ""
+    },
+    "slug": "rocketsaas-rightbrain-turning-sales-calls-into-content",
+    "subtitle": "",
+    "summary": "RocketSaaS built two Rightbrain workflows that convert call transcripts into structured insight and publish-ready content, replacing ad hoc analysis with a consistent pipeline.",
+    "tags": [
+      "case-study",
+      "rightbrain",
+      "workflows",
+      "content-ops",
+      "sales-calls"
+    ],
+    "title": "RocketSaaS × Rightbrain: Turning Sales Calls into Content"
+  },
+  "_ingest": {
+    "run_id": "019e17f4-31ca-c21e-4d88-3a2d07d4a505",
+    "task_id": "019e1604-0ad5-e71a-06f6-ddd0581d2438",
+    "ingested_at": "2026-05-11T16:52:20.493Z",
+    "source": "rightbrain-webhook"
+  }
+}
