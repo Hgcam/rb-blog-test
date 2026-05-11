@@ -3,7 +3,7 @@
     "name": "Rightbrain",
     "tagline": "Make your existing platforms smarter",
     "baseUrl": "https://rightbrain.ai",
-    "routePrefix": "/resources",
+    "routePrefix": "/rb-blog-test",
     "defaultOgImage": "/public/og-default.png",
     "language": "en",
     "themeDefault": "system"
