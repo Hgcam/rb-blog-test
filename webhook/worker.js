@@ -54,9 +54,14 @@ export default {
       return new Response('Skipped (is_error)', { status: 200 });
     }
 
+    // Debug: log top-level shape so we can diagnose payload issues
+    console.log('payload top-level keys:', JSON.stringify(Object.keys(run)));
+    console.log('run.id:', run.id, '| run.status:', run.status, '| run.is_error:', run.is_error);
+    console.log('run.response type:', typeof run.response, '| has post.slug:', !!(run.response?.post?.slug));
+
     const output = run.response;
     if (!output?.post?.slug) {
-      console.error('Missing response.post.slug in payload');
+      console.error('Missing response.post.slug — full payload:', JSON.stringify(run).slice(0, 500));
       return new Response('Missing post.slug', { status: 422 });
     }
 
@@ -88,96 +93,83 @@ export default {
     }
 
     // ── 4. Download & commit attached images ──────────────────────
-    const rbApiUrl = (env.RB_API_URL || '').replace(/\/$/, '');
-    const rbApiKey = env.RB_API_KEY  || '';
+    const rbApiUrl    = (env.RB_API_URL    || '').replace(/\/$/, '');
+    const rbApiKey    = env.RB_API_KEY     || '';
+    const rbOrgId     = env.RB_ORG_ID      || '';
+    const rbProjectId = env.RB_PROJECT_ID  || '';
 
-    // Map both original_filename and stored_filename → download_url.
-    // The task model writes data-blog-image using the original filename the user
-    // uploaded, but the API stores files under a UUID-based stored_filename.
-    const fileMap = {};
-    if (Array.isArray(run.files)) {
-      for (const f of run.files) {
-        if (!f.download_url) continue;
-        if (f.original_filename && isImageFile(f.original_filename)) {
-          fileMap[f.original_filename] = f.download_url;
-        }
-        if (f.stored_filename && isImageFile(f.stored_filename)) {
-          fileMap[f.stored_filename] = f.download_url;
-        }
-      }
+    // The webhook sends download_url as "" — construct the URL from known API path:
+    // /org/{org}/project/{project}/task/{task_id}/run/{run_id}/file/{stored_filename}
+    function buildDownloadUrl(storedFilename) {
+      if (!rbApiUrl || !rbOrgId || !rbProjectId || !run.task_id || !run.id) return null;
+      return `${rbApiUrl}/org/${rbOrgId}/project/${rbProjectId}/task/${run.task_id}/run/${run.id}/file/${storedFilename}`;
     }
 
-    // Collect all image filenames referenced in the output
-    const referencedFilenames = new Set();
+    // Collect all image files from run.files
+    const imageFiles = (run.files || []).filter(f => isImageFile(f.original_filename || f.stored_filename || ''));
+    console.log(`Image files found: ${imageFiles.length}`, imageFiles.map(f => f.original_filename));
 
+    // Collect all image keys referenced in the output
+    const referencedKeys = new Set();
     if (output.post?.body_html) {
       const re = /data-blog-image="([^"]+)"/g;
       let m;
-      while ((m = re.exec(output.post.body_html)) !== null) {
-        referencedFilenames.add(m[1]);
+      while ((m = re.exec(output.post.body_html)) !== null) referencedKeys.add(m[1]);
+    }
+    if (output.post?.seo?.og_image && isImageFile(output.post.seo.og_image)) referencedKeys.add(output.post.seo.og_image);
+    if (output.card?.thumbnail     && isImageFile(output.card.thumbnail))     referencedKeys.add(output.card.thumbnail);
+    console.log('data-blog-image keys in output:', JSON.stringify([...referencedKeys]));
+
+    // Download & commit each image file, track public path by every key that matches
+    const committedImages = {}; // data-blog-image key → public URL path
+    const ghBaseHeaders = {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28',
+      'User-Agent': 'rightbrain-blog-webhook',
+    };
+
+    for (const f of imageFiles) {
+      if (!rbApiKey) {
+        console.warn('RB_API_KEY not set — cannot download images');
+        break;
       }
-    }
-    if (output.post?.seo?.og_image && isImageFile(output.post.seo.og_image)) {
-      referencedFilenames.add(output.post.seo.og_image);
-    }
-    if (output.card?.thumbnail && isImageFile(output.card.thumbnail)) {
-      referencedFilenames.add(output.card.thumbnail);
-    }
 
-    // Download each image and commit to GitHub
-    const committedImages = {}; // filename → public URL path
-
-    for (const filename of referencedFilenames) {
-      const downloadUrl = fileMap[filename];
+      const downloadUrl = buildDownloadUrl(f.stored_filename);
       if (!downloadUrl) {
-        console.warn(`No download URL for image "${filename}" — skipping`);
+        console.warn(`Cannot construct download URL for "${f.original_filename}" — missing RB env vars`);
         continue;
       }
-      if (!rbApiUrl || !rbApiKey) {
-        console.warn(`RB_API_URL or RB_API_KEY not set — cannot download "${filename}"`);
-        continue;
-      }
-
-      const fullUrl = downloadUrl.startsWith('http')
-        ? downloadUrl
-        : `${rbApiUrl}${downloadUrl}`;
 
       let imageBytes;
       try {
-        const imgRes = await fetch(fullUrl, {
+        const imgRes = await fetch(downloadUrl, {
           headers: { Authorization: `Bearer ${rbApiKey}` },
         });
         if (!imgRes.ok) {
-          console.error(`Failed to download "${filename}": HTTP ${imgRes.status}`);
+          console.error(`Failed to download "${f.original_filename}": HTTP ${imgRes.status} from ${downloadUrl}`);
           continue;
         }
         imageBytes = await imgRes.arrayBuffer();
       } catch (e) {
-        console.error(`Error downloading "${filename}": ${e.message}`);
+        console.error(`Error downloading "${f.original_filename}": ${e.message}`);
         continue;
       }
 
-      // Commit image to GitHub at public/images/<slug>/<filename>
-      const imgRepoPath = `public/images/${slug}/${filename}`;
-      const imgApiUrl   = `https://api.github.com/repos/${owner}/${repo}/contents/${imgRepoPath}`;
-      const ghHeaders   = {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28',
-        'User-Agent': 'rightbrain-blog-webhook',
-      };
+      // Commit to GitHub using original_filename (spaces replaced with dashes for safe URLs)
+      const safeFilename = f.original_filename.replace(/\s+/g, '-');
+      const imgRepoPath  = `public/images/${slug}/${safeFilename}`;
+      const imgApiUrl    = `https://api.github.com/repos/${owner}/${repo}/contents/${imgRepoPath}`;
 
       let imgSha;
-      const existingImg = await fetch(imgApiUrl, { headers: ghHeaders });
-      if (existingImg.ok) {
-        imgSha = (await existingImg.json()).sha;
-      }
+      const existingImg = await fetch(imgApiUrl, { headers: ghBaseHeaders });
+      if (existingImg.ok) imgSha = (await existingImg.json()).sha;
 
       const imgCommitRes = await fetch(imgApiUrl, {
         method: 'PUT',
-        headers: { ...ghHeaders, 'Content-Type': 'application/json' },
+        headers: { ...ghBaseHeaders, 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          message: `blog: add image "${filename}" for post "${slug}"`,
+          message: `blog: add image "${safeFilename}" for post "${slug}"`,
           content: arrayBufferToBase64(imageBytes),
           branch,
           ...(imgSha ? { sha: imgSha } : {}),
@@ -190,22 +182,33 @@ export default {
         continue;
       }
 
-      // Public path the blog will use at runtime
-      committedImages[filename] = `${routePrefix}/public/images/${slug}/${filename}`;
-      console.log(`✔ Committed image ${imgRepoPath}`);
+      const publicPath = `${routePrefix}/public/images/${slug}/${safeFilename}`;
+      console.log(`✔ Committed image ${imgRepoPath} → ${publicPath}`);
+
+      // Register this public path under every key that could reference this file
+      const keysForThisFile = [
+        f.original_filename,
+        safeFilename,
+        slugifyFilename(f.original_filename),
+      ];
+      for (const key of keysForThisFile) {
+        committedImages[key] = publicPath;
+      }
     }
 
     // ── 5. Rewrite image references in the output ─────────────────
+    console.log('committedImages keys:', JSON.stringify(Object.keys(committedImages)));
     if (Object.keys(committedImages).length > 0) {
-      // Fill in src="" on <img data-blog-image="…"> in body_html
       if (output.post?.body_html) {
         output.post.body_html = output.post.body_html.replace(
           /(<img\b[^>]*?)data-blog-image="([^"]+)"([^>]*?)>/g,
-          (_m, before, filename, after) => {
-            const publicPath = committedImages[filename];
-            if (!publicPath) return _m;
-            let tag = `${before}data-blog-image="${filename}"${after}>`;
-            // Replace existing src or inject one
+          (_m, before, key, after) => {
+            const publicPath = committedImages[key] || committedImages[slugifyFilename(key)];
+            if (!publicPath) {
+              console.warn(`No committed image found for data-blog-image="${key}"`);
+              return _m;
+            }
+            let tag = `${before}data-blog-image="${key}"${after}>`;
             if (/\bsrc\s*=\s*["'][^"']*["']/.test(tag)) {
               tag = tag.replace(/\bsrc\s*=\s*["'][^"']*["']/, `src="${publicPath}"`);
             } else {
@@ -215,7 +218,6 @@ export default {
           }
         );
       }
-
       if (output.post?.seo?.og_image && committedImages[output.post.seo.og_image]) {
         output.post.seo.og_image = committedImages[output.post.seo.og_image];
       }
@@ -287,6 +289,15 @@ export default {
 
 function isImageFile(filename) {
   return typeof filename === 'string' && /\.(png|jpe?g|gif|webp|svg|avif)$/i.test(filename);
+}
+
+// Strip extension and turn into a lowercase slug (matches what the task model tends to produce)
+function slugifyFilename(filename) {
+  return (filename || '')
+    .replace(/\.[^.]+$/, '')       // remove extension
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')   // non-alphanumeric → dash
+    .replace(/^-|-$/g, '');        // trim leading/trailing dashes
 }
 
 function arrayBufferToBase64(buffer) {
