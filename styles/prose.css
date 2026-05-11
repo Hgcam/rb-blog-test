@@ -1,0 +1,277 @@
+/*
+ * Prose — styles for the .prose block (post.body_html injected by the task).
+ * Scoped under .prose; no leakage to the rest of the page.
+ * Targets only the tags allowed by the task output contract:
+ *   h2, h3, h4, p, ul, ol, li, blockquote, pre, code, a, strong, em,
+ *   figure, figcaption, img, hr, table, thead, tbody, tr, th, td
+ */
+
+.prose {
+  max-width: var(--paragraph-max-width);
+  color: var(--text-primary);
+
+  /* Readable body type */
+  font-size: var(--text-lg);
+  line-height: 1.7;
+}
+
+@media (max-width: 767px) {
+  .prose {
+    font-size: var(--text-md);
+    line-height: 1.7;
+  }
+}
+
+/* ── Vertical rhythm (lobotomised owl) ──────────────── */
+.prose > * + * {
+  margin-top: var(--space-3xl);
+}
+
+/* Tighter spacing after headings */
+.prose h2 + *,
+.prose h3 + *,
+.prose h4 + * {
+  margin-top: var(--space-xl);
+}
+
+/* ── Headings ────────────────────────────────────────── */
+.prose h2 {
+  font-size: var(--display-sm);
+  line-height: var(--display-sm-lh);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  margin-top: var(--space-7xl);
+}
+
+.prose h3 {
+  font-size: var(--display-xs);
+  line-height: var(--display-xs-lh);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  margin-top: var(--space-6xl);
+}
+
+.prose h4 {
+  font-size: var(--text-xl);
+  line-height: var(--text-xl-lh);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+  margin-top: var(--space-5xl);
+}
+
+/* Don't add extra top margin when heading is the first child */
+.prose h2:first-child,
+.prose h3:first-child,
+.prose h4:first-child {
+  margin-top: 0;
+}
+
+/* ── Paragraphs ──────────────────────────────────────── */
+.prose p {
+  color: var(--text-secondary);
+}
+
+/* ── Links ───────────────────────────────────────────── */
+.prose a {
+  color: var(--text-brand-tertiary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  font-weight: var(--fw-medium);
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.prose a:hover {
+  color: var(--text-brand-secondary);
+}
+
+/* ── Strong & em ─────────────────────────────────────── */
+.prose strong {
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+}
+
+.prose em {
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+/* ── Lists ───────────────────────────────────────────── */
+.prose ul,
+.prose ol {
+  padding-left: var(--space-3xl);
+  color: var(--text-secondary);
+}
+
+.prose ul {
+  list-style: disc;
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
+.prose li {
+  margin-top: var(--space-md);
+  padding-left: var(--space-xs);
+}
+
+.prose li:first-child {
+  margin-top: 0;
+}
+
+.prose li > p {
+  margin-top: var(--space-md);
+}
+
+.prose li > ul,
+.prose li > ol {
+  margin-top: var(--space-md);
+}
+
+/* ── Blockquote ──────────────────────────────────────── */
+.prose blockquote {
+  padding: var(--space-2xl) var(--space-3xl);
+  border-left: 3px solid var(--border-brand);
+  background-color: var(--bg-secondary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--text-secondary);
+}
+
+.prose blockquote p {
+  color: var(--text-secondary);
+  font-size: var(--text-lg);
+}
+
+/* Rightbrain voice: no italics in blockquotes */
+.prose blockquote em {
+  font-style: normal;
+}
+
+/* ── Code (inline) ───────────────────────────────────── */
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  font-weight: var(--fw-regular);
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-secondary);
+}
+
+/* Don't double-style code inside pre */
+.prose pre code {
+  background: none;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* ── Code block ──────────────────────────────────────── */
+.prose pre {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  padding: var(--space-3xl);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-secondary);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  tab-size: 2;
+}
+
+/* ── Horizontal rule ─────────────────────────────────── */
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--border-secondary);
+  margin: var(--space-7xl) 0;
+}
+
+/* ── Figure & images ─────────────────────────────────── */
+.prose figure {
+  margin: var(--space-5xl) 0;
+}
+
+.prose figure img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-secondary);
+}
+
+.prose figcaption {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  margin-top: var(--space-md);
+  text-align: center;
+}
+
+/* Standalone img (not wrapped in figure) */
+.prose img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-secondary);
+  margin: var(--space-3xl) 0;
+}
+
+/* ── Tables ──────────────────────────────────────────── */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-lh);
+  /* Horizontal scroll on mobile */
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .prose table {
+    display: table;
+    white-space: normal;
+  }
+}
+
+.prose thead {
+  background-color: var(--bg-secondary);
+}
+
+.prose th,
+.prose td {
+  padding: var(--space-lg) var(--space-xl);
+  border: 1px solid var(--border-secondary);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+}
+
+.prose td {
+  color: var(--text-secondary);
+}
+
+.prose tbody tr:nth-child(even) {
+  background-color: var(--bg-secondary);
+}
+
+/* ── Nested content spacing fixes ────────────────────── */
+.prose > ul > li + li {
+  margin-top: var(--space-md);
+}
+
+.prose > ol > li + li {
+  margin-top: var(--space-md);
+}

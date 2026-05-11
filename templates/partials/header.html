@@ -1,0 +1,62 @@
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<header class="site-header" role="banner">
+  <div class="container site-header__inner">
+
+    <a class="site-header__logo" href="{{site.baseUrl}}/" aria-label="{{site.name}} home">
+      <svg class="site-header__logo-mark" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <rect width="28" height="28" rx="7" fill="#155dee"/>
+        <path d="M7 21V7h7a7 7 0 0 1 0 14H7Z" fill="#fff"/>
+      </svg>
+      <span class="site-header__logo-name">{{site.name}}</span>
+    </a>
+
+    <nav class="site-header__nav" aria-label="Primary navigation" id="primary-nav">
+      <a href="{{site.baseUrl}}/">Product</a>
+      <a href="{{site.baseUrl}}/resources-library/" aria-current="{{nav.resourcesCurrent}}">Resources</a>
+      <a href="{{site.baseUrl}}/book-demo/">Book Demo</a>
+    </nav>
+
+    <div class="site-header__actions">
+      <button
+        class="theme-toggle"
+        id="theme-toggle"
+        aria-label="Toggle colour scheme"
+        type="button"
+      >
+        <!-- Sun icon (shown in dark mode) -->
+        <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <!-- Moon icon (shown in light mode) -->
+        <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+        aria-controls="primary-nav"
+        type="button"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" width="18" height="18">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+</header>

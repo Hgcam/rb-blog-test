@@ -1,0 +1,56 @@
+<main id="main-content" class="directory-page">
+  <div class="container">
+
+    <!-- Hero -->
+    <section class="directory-hero" aria-labelledby="directory-title">
+      <p class="directory-hero__eyebrow">{{site.name}}</p>
+      <h1 class="directory-hero__title" id="directory-title">{{config.directory.title}}</h1>
+      <p class="directory-hero__lede">{{config.directory.lede}}</p>
+    </section>
+
+    <!-- Filter row (server-rendered, no JS required for v1) -->
+    {{#if allTags}}
+    <div class="filter-row" role="group" aria-label="Filter by topic">
+      <span class="filter-row__label" id="filter-label">Filter</span>
+      <ul class="filter-chips" aria-labelledby="filter-label">
+        <li>
+          <a href="{{site.routePrefix}}/" class="tag {{#unless activeTag}}tag--active{{/unless}}" aria-current="{{#unless activeTag}}true{{/unless}}">
+            All
+          </a>
+        </li>
+        {{#each allTags}}
+        <li>
+          <a
+            href="{{site.routePrefix}}/?tag={{.}}"
+            class="tag"
+          >{{.}}</a>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/if}}
+
+    <!-- Card grid -->
+    <section class="directory-section" aria-label="Posts">
+      {{#if posts}}
+      <div class="card-grid card-grid--has-featured" role="list">
+        {{cardsHtml}}
+      </div>
+      {{else}}
+      <div class="card-grid card-grid--empty" role="status">
+        <p>No posts yet — check back soon.</p>
+      </div>
+      {{/if}}
+    </section>
+
+    <!-- Book demo CTA band -->
+    <div class="book-demo-band" role="complementary" aria-label="Book a demo">
+      <h2 class="book-demo-band__title">{{config.directory.ctaTitle}}</h2>
+      <p class="book-demo-band__description">{{config.directory.ctaDescription}}</p>
+      <a href="{{config.directory.ctaHref}}" class="btn btn--white btn--lg">
+        {{config.directory.ctaButtonLabel}}
+      </a>
+    </div>
+
+  </div><!-- / container -->
+</main>

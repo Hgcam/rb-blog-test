@@ -1,0 +1,136 @@
+<main id="main-content" class="post-page">
+  <div class="container">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{site.baseUrl}}/resources-library/">Resources</a>
+      <span class="breadcrumb__separator" aria-hidden="true">›</span>
+      {{#if post.primaryTag}}
+      <a href="{{site.baseUrl}}/resources-library/?tag={{post.primaryTag}}">{{post.primaryTag}}</a>
+      <span class="breadcrumb__separator" aria-hidden="true">›</span>
+      {{/if}}
+      <span class="breadcrumb__current">{{post.title}}</span>
+    </nav>
+
+    <div class="post-page__layout">
+
+      <!-- Main article column -->
+      <div>
+        <article itemscope itemtype="https://schema.org/BlogPosting">
+
+          <!-- Post header -->
+          <header class="post-header">
+            {{#if post.primaryTag}}
+            <p class="post-header__eyebrow">{{post.primaryTag}}</p>
+            {{/if}}
+
+            <h1 class="post-header__title" itemprop="headline">{{post.title}}</h1>
+
+            {{#if post.subtitle}}
+            <p class="post-header__subtitle" itemprop="description">{{post.subtitle}}</p>
+            {{/if}}
+          </header>
+
+          <!-- Meta row -->
+          <div class="post-meta" role="group" aria-label="Post details">
+            {{#if post.tags}}
+            <ul class="post-meta__tags" aria-label="Tags">
+              {{#each post.tags}}
+              <li>{{.}}</li>
+              {{/each}}
+            </ul>
+            {{/if}}
+
+            {{#if post.reading_time_minutes}}
+            <span class="post-meta__reading-time">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              {{post.reading_time_minutes}} min read
+            </span>
+            {{/if}}
+
+            {{#if post.published_at}}
+            <time class="post-meta__date" datetime="{{post.published_at}}" itemprop="datePublished">
+              {{post.published_at_formatted}}
+            </time>
+            {{/if}}
+          </div>
+
+          <!-- Hero image -->
+          {{#if post.seo.og_image}}
+          <figure class="post-hero">
+            <img
+              src="{{post.seo.og_image}}"
+              alt="{{post.title}}"
+              width="1200"
+              height="630"
+              loading="eager"
+              decoding="async"
+              itemprop="image"
+            >
+          </figure>
+          {{/if}}
+
+          <!-- Body -->
+          <div class="post-body prose" itemprop="articleBody">
+            {{post.body_html}}
+          </div>
+
+          <!-- Share row -->
+          <div class="post-share">
+            <span class="post-share__label">Share</span>
+            <ul class="post-share__links">
+              <li>
+                <a
+                  href="https://twitter.com/intent/tweet?url={{seo.canonical}}&text={{post.seo.meta_title}}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Share on X (Twitter)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4l16 16M20 4 4 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.linkedin.com/sharing/share-offsite/?url={{seo.canonical}}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Share on LinkedIn"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- CTA -->
+          <aside class="post-cta" aria-label="Call to action">
+            <span class="post-cta__label">{{site.name}}</span>
+            <h2 class="post-cta__title">{{config.post.ctaTitle}}</h2>
+            <p class="post-cta__description">{{config.post.ctaDescription}}</p>
+            <a href="{{config.post.ctaHref}}" class="btn btn--white btn--lg">
+              {{config.post.ctaButtonLabel}}
+            </a>
+          </aside>
+
+        </article>
+
+        <!-- Related posts -->
+        {{#if relatedPosts}}
+        <section class="related-posts" aria-label="Related posts">
+          <h2 class="related-posts__heading">More resources</h2>
+          <div class="related-posts__grid" role="list">
+            {{relatedPostsHtml}}
+          </div>
+        </section>
+        {{/if}}
+
+      </div><!-- / main column -->
+
+      <!-- Sidebar (desktop only) -->
+      <aside class="post-sidebar" aria-label="Article sidebar">
+        <!-- Reserved for future use: TOC, author card, social proof -->
+      </aside>
+
+    </div><!-- / layout -->
+  </div><!-- / container -->
+</main>

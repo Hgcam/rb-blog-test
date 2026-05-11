@@ -1,0 +1,17 @@
+{
+  "name": "rightbrain-blog",
+  "version": "1.0.0",
+  "description": "Rightbrain static blog — plain HTML/CSS, no framework",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "validate": "node scripts/validate.js",
+    "ingest": "node scripts/ingest.js",
+    "preview": "node scripts/preview.js",
+    "clean": "node --eval \"import('node:fs').then(f=>f.default.rmSync('dist',{recursive:true,force:true})).then(()=>console.log('dist cleaned'))\""
+  }
+}

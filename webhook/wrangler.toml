@@ -1,0 +1,16 @@
+# Cloudflare Workers config — deploy with: npx wrangler deploy
+name = "rightbrain-blog-webhook"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# Set these as encrypted secrets via the Cloudflare dashboard or:
+#   npx wrangler secret put WEBHOOK_SECRET
+#   npx wrangler secret put GITHUB_TOKEN
+# Set plain vars here or in the dashboard:
+[vars]
+GITHUB_OWNER     = ""        # e.g. "rightbrainai"
+GITHUB_REPO      = ""        # e.g. "blog"
+GITHUB_BRANCH    = "main"
+BLOG_DATA_PATH   = "blog/data/posts"
+ROUTE_PREFIX     = "/resources"
+TASK_HREF_PREFIX = "/blog"

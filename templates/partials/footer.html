@@ -1,0 +1,50 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="container site-footer__inner">
+
+    <div class="site-footer__brand">
+      <a href="{{site.baseUrl}}/" class="site-header__logo" aria-label="{{site.name}} home">
+        <svg class="site-header__logo-mark" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <rect width="28" height="28" rx="7" fill="#155dee"/>
+          <path d="M7 21V7h7a7 7 0 0 1 0 14H7Z" fill="#fff"/>
+        </svg>
+        <span class="site-header__logo-name">{{site.name}}</span>
+      </a>
+      <p class="site-footer__tagline">{{site.tagline}}</p>
+    </div>
+
+    <nav class="site-footer__cols" aria-label="Footer navigation">
+      <div>
+        <p class="site-footer__col-heading">Community</p>
+        <ul class="site-footer__col-links">
+          <li><a href="{{site.baseUrl}}/b2b-services/">B2B Services</a></li>
+          <li><a href="{{site.baseUrl}}/partners/">Partners Program</a></li>
+          <li><a href="{{site.baseUrl}}/resources-library/">Resources</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="site-footer__col-heading">Support</p>
+        <ul class="site-footer__col-links">
+          <li><a href="https://docs.rightbrain.ai/" rel="noopener">Documentation</a></li>
+          <li><a href="{{site.baseUrl}}/slack/" rel="noopener">Slack Group</a></li>
+          <li><a href="{{site.baseUrl}}/brand-kit/">Brand Kit</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="site-footer__col-heading">Legal</p>
+        <ul class="site-footer__col-links">
+          <li><a href="{{site.baseUrl}}/acceptable-use/">Acceptable Use</a></li>
+          <li><a href="{{site.baseUrl}}/data-processing/">Data Processing</a></li>
+          <li><a href="{{site.baseUrl}}/privacy/">Privacy Notice</a></li>
+          <li><a href="{{site.baseUrl}}/terms/">Customer Terms</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="site-footer__bottom">
+      <p class="site-footer__copyright">
+        &copy; <span id="footer-year">{{site.year}}</span> {{site.name}}. All rights reserved.
+      </p>
+    </div>
+
+  </div>
+</footer>

@@ -1,0 +1,219 @@
+/*
+ * Design tokens — translated from brain-main/.cursor/skills/rightbrain-design-system/references/tokens.md
+ * Same semantic values as the product Tailwind config; expressed as CSS custom properties.
+ * Implementation: use var(--token-name) in all other CSS files, never raw hex.
+ */
+
+:root {
+  /* ── Background ─────────────────────────────────── */
+  --bg-primary:           #ffffff;
+  --bg-primary-hover:     #fafafa;
+  --bg-secondary:         #fafafa;
+  --bg-secondary-hover:   #f5f5f5;
+  --bg-tertiary:          #f5f5f5;
+  --bg-quaternary:        #e9e9eb;
+  --bg-overlay:           #0a0c12;
+  --bg-primary-solid:     #0a0c12;
+  --bg-brand-primary:     #eff4ff;
+  --bg-brand-secondary:   #d1e0ff;
+  --bg-brand-solid:       #155dee;
+  --bg-brand-solid-hover: #004eea;
+  --bg-brand-section:     #0040c1;
+  --bg-error-primary:     #fef2f1;
+  --bg-error-solid:       #d92c20;
+  --bg-warning-primary:   #fff9eb;
+  --bg-warning-solid:     #db6803;
+  --bg-success-primary:   #ecfcf2;
+  --bg-success-solid:     #069454;
+
+  /* ── Text ────────────────────────────────────────── */
+  --text-primary:         #181d27;
+  --text-secondary:       #414651;
+  --text-tertiary:        #535861;
+  --text-quaternary:      #717680;
+  --text-disabled:        #717680;
+  --text-placeholder:     #717680;
+  --text-white:           #ffffff;
+  --text-brand-primary:   #00349e;
+  --text-brand-secondary: #004eea;
+  --text-brand-tertiary:  #155dee;
+  --text-error-primary:   #d92c20;
+  --text-warning-primary: #db6803;
+  --text-success-primary: #069454;
+
+  /* ── Foreground (icons) ──────────────────────────── */
+  --fg-primary:           #181d27;
+  --fg-secondary:         #414651;
+  --fg-tertiary:          #535861;
+  --fg-quaternary:        #717680;
+  --fg-disabled:          #a3a7ae;
+  --fg-brand-primary:     #155dee;
+  --fg-brand-secondary:   #2970fe;
+  --fg-error-primary:     #d92c20;
+  --fg-success-primary:   #069454;
+
+  /* ── Border ──────────────────────────────────────── */
+  --border-primary:       #d5d6d9;
+  --border-secondary:     #e9e9eb;
+  --border-tertiary:      #f5f5f5;
+  --border-brand:         #2970fe;
+  --border-error:         #f04437;
+  --border-disabled:      #d5d6d9;
+
+  /* ── Focus ───────────────────────────────────────── */
+  --focus-ring:           #2970fe;
+  --focus-ring-error:     #f04437;
+
+  /* ── Shadows ─────────────────────────────────────── */
+  --shadow-xs: 0 1px 2px rgba(10, 12, 18, 0.05);
+  --shadow-sm: 0 1px 3px rgba(10, 12, 18, 0.10), 0 1px 2px rgba(10, 12, 18, 0.06);
+  --shadow-md: 0 4px 8px rgba(10, 12, 18, 0.10), 0 2px 4px rgba(10, 12, 18, 0.06);
+  --shadow-lg: 0 12px 16px rgba(10, 12, 18, 0.08), 0 4px 6px rgba(10, 12, 18, 0.03);
+  --shadow-xl: 0 20px 24px rgba(10, 12, 18, 0.08), 0 8px 10px rgba(10, 12, 18, 0.03);
+
+  /* ── Spacing (4px base) ──────────────────────────── */
+  --space-xxs:  2px;
+  --space-xs:   4px;
+  --space-sm:   6px;
+  --space-md:   8px;
+  --space-lg:   12px;
+  --space-xl:   16px;
+  --space-2xl:  20px;
+  --space-3xl:  24px;
+  --space-4xl:  32px;
+  --space-5xl:  40px;
+  --space-6xl:  48px;
+  --space-7xl:  64px;
+  --space-8xl:  80px;
+  --space-9xl:  96px;
+  --space-10xl: 128px;
+  --space-11xl: 160px;
+
+  /* ── Radius ──────────────────────────────────────── */
+  --radius-xxs:  2px;
+  --radius-xs:   4px;
+  --radius-sm:   6px;
+  --radius-md:   8px;
+  --radius-lg:   10px;
+  --radius-xl:   12px;
+  --radius-2xl:  16px;
+  --radius-3xl:  20px;
+  --radius-4xl:  24px;
+  --radius-full: 9999px;
+
+  /* ── Typography ──────────────────────────────────── */
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, ui-sans-serif, sans-serif;
+  --font-mono: ui-monospace, "Fira Code", "Cascadia Code", "Consolas", monospace;
+
+  --text-xs:   12px; --text-xs-lh:   18px;
+  --text-sm:   14px; --text-sm-lh:   20px;
+  --text-md:   16px; --text-md-lh:   24px;
+  --text-lg:   18px; --text-lg-lh:   28px;
+  --text-xl:   20px; --text-xl-lh:   30px;
+
+  --display-xs: 24px; --display-xs-lh: 32px;
+  --display-sm: 30px; --display-sm-lh: 38px;
+  --display-md: 36px; --display-md-lh: 44px;
+  --display-lg: 48px; --display-lg-lh: 60px;
+  --display-xl: 60px; --display-xl-lh: 72px;
+
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+
+  /* ── Layout ──────────────────────────────────────── */
+  --paragraph-max-width:      720px;
+  --container-max-width:      1280px;
+  --container-padding-mobile: 16px;
+  --container-padding-desktop: 32px;
+}
+
+/* ── Dark mode ─────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-primary:           #0c0e12;
+    --bg-primary-hover:     #22262f;
+    --bg-secondary:         #161b26;
+    --bg-secondary-hover:   #22262f;
+    --bg-tertiary:          #22262f;
+    --bg-quaternary:        #373a41;
+    --bg-overlay:           #22262f;
+    --bg-primary-solid:     #fafafa;
+    --bg-brand-primary:     #2970fe;
+    --bg-brand-secondary:   #155dee;
+    --bg-brand-solid:       #155dee;
+    --bg-brand-solid-hover: #2970fe;
+    --bg-brand-section:     #fafafa;
+
+    --text-primary:         #f7f7f7;
+    --text-secondary:       #cecfd2;
+    --text-tertiary:        #94969c;
+    --text-quaternary:      #94969c;
+    --text-disabled:        #85888e;
+    --text-placeholder:     #85888e;
+    --text-brand-primary:   #f7f7f7;
+    --text-brand-secondary: #cecfd2;
+    --text-brand-tertiary:  #94969c;
+    --text-error-primary:   #f97066;
+    --text-warning-primary: #fcb022;
+    --text-success-primary: #47cd89;
+
+    --fg-primary:           #ffffff;
+    --fg-secondary:         #cecfd2;
+    --fg-tertiary:          #94969c;
+    --fg-quaternary:        #94969c;
+    --fg-disabled:          #85888e;
+    --fg-brand-primary:     #2970fe;
+    --fg-brand-secondary:   #2970fe;
+    --fg-error-primary:     #f04437;
+    --fg-success-primary:   #17b169;
+
+    --border-primary:       #373a41;
+    --border-secondary:     #22262f;
+    --border-tertiary:      #22262f;
+    --border-brand:         #518bff;
+    --border-disabled:      #373a41;
+  }
+}
+
+[data-theme="dark"] {
+  --bg-primary:           #0c0e12;
+  --bg-primary-hover:     #22262f;
+  --bg-secondary:         #161b26;
+  --bg-secondary-hover:   #22262f;
+  --bg-tertiary:          #22262f;
+  --bg-quaternary:        #373a41;
+  --bg-primary-solid:     #fafafa;
+  --bg-brand-primary:     #2970fe;
+  --bg-brand-secondary:   #155dee;
+  --bg-brand-solid:       #155dee;
+  --bg-brand-solid-hover: #2970fe;
+
+  --text-primary:         #f7f7f7;
+  --text-secondary:       #cecfd2;
+  --text-tertiary:        #94969c;
+  --text-quaternary:      #94969c;
+  --text-disabled:        #85888e;
+  --text-placeholder:     #85888e;
+  --text-brand-primary:   #f7f7f7;
+  --text-brand-secondary: #cecfd2;
+  --text-brand-tertiary:  #94969c;
+  --text-error-primary:   #f97066;
+  --text-warning-primary: #fcb022;
+  --text-success-primary: #47cd89;
+
+  --fg-primary:           #ffffff;
+  --fg-secondary:         #cecfd2;
+  --fg-tertiary:          #94969c;
+  --fg-quaternary:        #94969c;
+  --fg-disabled:          #85888e;
+  --fg-brand-primary:     #2970fe;
+  --fg-brand-secondary:   #2970fe;
+
+  --border-primary:       #373a41;
+  --border-secondary:     #22262f;
+  --border-tertiary:      #22262f;
+  --border-brand:         #518bff;
+  --border-disabled:      #373a41;
+}

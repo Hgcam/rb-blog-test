@@ -1,0 +1,29 @@
+{
+  "site": {
+    "name": "Rightbrain",
+    "tagline": "Make your existing platforms smarter",
+    "baseUrl": "https://rightbrain.ai",
+    "routePrefix": "/resources",
+    "defaultOgImage": "/public/og-default.png",
+    "language": "en",
+    "themeDefault": "system"
+  },
+  "social": {
+    "twitter": "@rightbrainai",
+    "linkedin": "https://www.linkedin.com/company/rightbrain-ai"
+  },
+  "directory": {
+    "title": "Resources",
+    "lede": "Access our latest resources to see how you can make your existing platforms smarter with Rightbrain.",
+    "ctaTitle": "Book a personalised workshop",
+    "ctaDescription": "Want to build something that's truly unique and tailored for your team? Book an intro workshop with our team.",
+    "ctaHref": "/book-demo",
+    "ctaButtonLabel": "Book Demo"
+  },
+  "post": {
+    "ctaTitle": "Ready to ship your next AI feature?",
+    "ctaDescription": "Book a personalised demo and see how Rightbrain can work for your team.",
+    "ctaHref": "/book-demo",
+    "ctaButtonLabel": "Book demo"
+  }
+}
