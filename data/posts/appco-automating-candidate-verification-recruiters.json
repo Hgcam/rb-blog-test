@@ -1,0 +1,170 @@
+{
+  "card": {
+    "card_html": "<article class=\"post-card\"><a class=\"post-card__link\" href=\"/rb-blog-test/appco-automating-candidate-verification-recruiters/\"><figure class=\"post-card__media\"><img src=\"/rb-blog-test/public/images/appco-automating-candidate-verification-recruiters/hero-1-appco.png\" data-blog-image=\"image_1\" alt=\"Candidate verification outcomes: zero manual chasing, faster starts, and 80–90% automation\" loading=\"lazy\"></figure><div class=\"post-card__body\"><p class=\"post-card__eyebrow\">Case Study</p><h3 class=\"post-card__title\">Appco: Automating Candidate Verification for Recruiters</h3><p class=\"post-card__summary\">See how Appco uses a Rightbrain agent to check documents, chase missing items, and send verified packs for approval.</p><ul class=\"post-card__tags\"><li>case-study</li><li>recruitment</li><li>workflow-automation</li><li>ai-agents</li><li>compliance</li></ul></div></a></article>",
+    "summary": "See how Appco uses a Rightbrain agent to check documents, chase missing items, and send verified packs for approval.",
+    "tags": [
+      "case-study",
+      "recruitment",
+      "workflow-automation",
+      "ai-agents",
+      "compliance"
+    ],
+    "thumbnail": "/rb-blog-test/public/images/appco-automating-candidate-verification-recruiters/hero-1-appco.png",
+    "title": "Appco: Automating Candidate Verification for Recruiters",
+    "type": "Case Study"
+  },
+  "copyedit": {
+    "issues": [
+      {
+        "after": "over 5,000 a year",
+        "before": "over 5 000 a year",
+        "category": "formatting",
+        "rationale": "Standardised the thousands separator."
+      },
+      {
+        "after": "where 80–90% could be automated",
+        "before": "where 80-90% could be automated",
+        "category": "formatting",
+        "rationale": "Used an en dash for the percentage range."
+      },
+      {
+        "after": "Appco: Automating Candidate Verification for Recruiters",
+        "before": "Automating candidate verification so recruiters can focus on placing people, not chasing paperwork",
+        "category": "style",
+        "rationale": "Tightened the title for blog and card use while preserving the topic."
+      },
+      {
+        "after": "At volume, this creates a significant bottleneck.",
+        "before": "At volume, this creates a huge bottleneck.",
+        "category": "style",
+        "rationale": "Replaced vague emphasis with more precise wording."
+      },
+      {
+        "after": "The work was repetitive and time-consuming, and it sat entirely on a human’s plate.",
+        "before": "the work wasn’t complex, but it was time-consuming, and it sat entirely on a human’s plate.",
+        "category": "style",
+        "rationale": "Tightened the sentence without changing the meaning."
+      },
+      {
+        "after": "The problem was that executing it required a lot of human intervention, even though 80–90% could be automated.",
+        "before": "The problem was that executing it required a lot of human intervention, where 80-90% could be automated.",
+        "category": "grammar",
+        "rationale": "Corrected the clause structure and range punctuation."
+      },
+      {
+        "after": "requirements — checking for expiry dates, inconsistencies, missing fields, and compliance gaps",
+        "before": "requirements - checking for expiry dates, inconsistencies, missing fields, and compliance gaps",
+        "category": "formatting",
+        "rationale": "Used an em dash for the parenthetical aside."
+      },
+      {
+        "after": "The coordinator’s role shifts from manually pushing the process through to overseeing the process",
+        "before": "The coordinator’s role shifts from manually pushing the process through, to overseeing the process",
+        "category": "grammar",
+        "rationale": "Removed an unnecessary comma between parallel phrases."
+      },
+      {
+        "after": "signing off on the outcome — acting as a higher-level supervisor",
+        "before": "signing off on the outcome - acting as a higher-level supervisor",
+        "category": "formatting",
+        "rationale": "Used an em dash for the aside."
+      },
+      {
+        "after": "The workflow list was integrated into the surrounding explanation.",
+        "before": "Workflow:",
+        "category": "style",
+        "rationale": "Removed a stranded label that did not introduce text in the extraction."
+      },
+      {
+        "after": "Converted checkmark-prefixed lines into a semantic unordered list.",
+        "before": "✓ Coordinators are no longer the bottleneck.",
+        "category": "formatting",
+        "rationale": "Reformatted visual bullets as accessible HTML list items."
+      },
+      {
+        "after": "where the gap between “candidate accepted” and “candidate starts” is longer than it should be",
+        "before": "where \"candidate accepted\" and \"candidate starts\" is longer than it should be",
+        "category": "grammar",
+        "rationale": "Clarified the subject so the verb agrees."
+      },
+      {
+        "after": "“candidate accepted” and “candidate starts”",
+        "before": "\"candidate accepted\" and \"candidate starts\"",
+        "category": "formatting",
+        "rationale": "Converted straight quotation marks to smart quotes."
+      },
+      {
+        "after": "How else are recruitment agencies using Rightbrain?",
+        "before": "How else are recruitment agencies using Rightbrain\nHow else are recruitment agencies using Rightbrain?",
+        "category": "style",
+        "rationale": "Removed the duplicated heading."
+      },
+      {
+        "after": "Here are some other agents recruitment agencies have been building:",
+        "before": "Here’s some other agents recruitment agencies have been building:",
+        "category": "grammar",
+        "rationale": "Corrected subject-verb agreement."
+      },
+      {
+        "after": "Removed the empty list item after CRM enrichment.",
+        "before": "-",
+        "category": "style",
+        "rationale": "Deleted an incomplete bullet that added no content."
+      },
+      {
+        "after": "<a href=\"https://rightbrain.ai/demo\" rel=\"noopener\">rightbrain.ai/demo</a>",
+        "before": "rightbrain.ai/demo",
+        "category": "formatting",
+        "rationale": "Converted the plain URL into a full HTTPS link."
+      },
+      {
+        "after": "The workflow runs inside the tools the team already uses. There is no new platform to manage.",
+        "before": "The workflow runs inside the tools the team already uses. There is no new platform to manage, no new login",
+        "category": "style",
+        "rationale": "Split a long sentence for readability."
+      },
+      {
+        "after": "which frees their time to work on more complex cases",
+        "before": "which frees up their time to work on more complex cases",
+        "category": "style",
+        "rationale": "Removed an unnecessary word."
+      }
+    ],
+    "stats": {
+      "by_category": {
+        "formatting": 7,
+        "grammar": 4,
+        "style": 8,
+        "typo": 0
+      },
+      "total_issues": 19
+    }
+  },
+  "post": {
+    "body_html": "<h2>The problem</h2><h3>Manual checks in high-volume placement firms create significant bottlenecks</h3><p>Every candidate placed needs to pass verification before they start: ID checks, right-to-work documentation, and certifications. For a temp recruitment agency placing dozens of candidates a week, that creates a large amount of repetitive checking, cross-referencing, and chasing.</p><p>Onboarding coordinators were spending most of their time in a loop: check what has been submitted, identify what is missing, follow up with the candidate, wait, and check again. Conducting 400 checks per month, over 5,000 a year, the work was repetitive and time-consuming, and it sat entirely on a human’s plate.</p><p>The knock-on effect was direct. Candidates sitting in the verification queue were not starting. Placements were delayed. Revenue that should have been landing was waiting on someone to manually move a document through a checklist. At volume, this creates a significant bottleneck.</p><p>The problem was not a lack of process. There was a clear checklist. The problem was that executing it required a lot of human intervention, even though 80–90% could be automated.</p><h2>The workflow</h2><h3>Verification that runs itself</h3><p>When a candidate is confirmed for placement, the Rightbrain-powered pipeline initiates automatically. The agent works through the verification checklist, tracks what has been submitted, follows up on gaps, and compiles the completed pack.</p><p>The coordinator steps in at the end to review and approve, not at every step along the way, which frees their time to work on more complex cases.</p><figure><img src=\"/rb-blog-test/public/images/appco-automating-candidate-verification-recruiters/pipeline-2-workflow-appco.png\" data-blog-image=\"image_2\" alt=\"Workflow diagram showing candidate confirmation, checklist initiation, document cross-referencing, automated follow-ups, coordinator approval, and verified pack compilation\" loading=\"lazy\"><figcaption>The verification pipeline moves from candidate confirmation to a verified onboarding pack.</figcaption></figure><h3>The verification pipeline</h3><h4>Candidate confirmed → verified onboarding pack</h4><p>When a candidate is confirmed for placement, their details enter the onboarding workflow automatically. The Rightbrain agent initiates the verification checklist: what documents are required, what checks need to be completed, and what is already on file from previous placements or prior submissions.</p><p>As documents come in, the agent cross-references each one against requirements — checking for expiry dates, inconsistencies, missing fields, and compliance gaps. Anything that does not pass is flagged immediately, with an automated follow-up sent directly to the candidate detailing exactly what is needed.</p><p>The agent tracks the status of every open item across every candidate in the pipeline simultaneously. Nothing waits in a queue because someone has not had time to look at it yet.</p><p>Once all checks pass, the agent compiles a verified onboarding pack and routes it to the coordinator for final sign-off. The human reviews a completed file, not a half-finished checklist.</p><p>The coordinator’s role shifts from manually pushing the process through to overseeing the process and signing off on the outcome — acting as a higher-level supervisor. The agent handles the chasing, checking, and compiling. The human makes the final call.</p><h2>What changed</h2><h3>Coordinators now have time to focus on more complex tasks</h3><ul><li>Coordinators are no longer the bottleneck. The repetitive loop of check, chase, wait, and check again is handled by the agent. Their time goes to the exceptions that need human judgement: a reference that does not add up, a candidate with unusual circumstances, or a compliance edge case that needs a decision.</li><li>Every candidate goes through the same checks every time. There is no variation based on who is handling the file or how busy the team is. Compliance coverage is consistent at scale.</li><li>Candidates are onboarded faster. Nothing sits in a queue waiting for a manual review. Follow-ups go out immediately when something is missing, not when someone gets around to noticing.</li><li>Placements start sooner. The time between “candidate accepted” and “candidate starts” is shorter because verification no longer depends on coordinator availability.</li><li>The pipeline scales without adding headcount. Doubling placement volume does not mean doubling the onboarding team. The agent handles the increase; coordinator capacity stays focused on quality and exceptions.</li></ul><blockquote><p>We spend a huge amount of time on calls. There’s so much good data in them, but it was always in an unstructured format. This takes that unstructured data and turns it into part of our core workflows.</p><p><strong>Mike Lush</strong>, Appco Innovation and Data Operations Lead</p></blockquote><h2>Who this is for</h2><h3>Any recruitment business where the gap between “candidate accepted” and “candidate starts” is longer than it should be</h3><p>This workflow applies to any business placing candidates at volume, where manual verification creates significant bottlenecks.</p><p>It is particularly effective where compliance requirements are consistent across placements — the same checks, the same documents, and the same standards applied to every candidate. When the process is defined but the execution is manual, there is a strong case for automation.</p><p>The workflow runs inside the tools the team already uses. There is no new platform to manage, and no new login for coordinators to remember. The agent operates in the background, surfacing only what needs a human decision.</p><h2>How else are recruitment agencies using Rightbrain?</h2><p>With Rightbrain, it is about stacking different agents on your way to becoming AI-native. Here is another agent recruitment agencies have been building:</p><ul><li><strong>CRM enrichment:</strong> All new leads are automatically enriched to provide context for marketing and sales.</li></ul><h2>See this running in your stack</h2><p>We’ll map your current onboarding workflow and build the agent with you.</p><p><a href=\"https://rightbrain.ai/demo\" rel=\"noopener\">rightbrain.ai/demo</a></p>",
+    "published_at": "2026-05-12",
+    "reading_time_minutes": 4,
+    "seo": {
+      "meta_description": "See how Appco and Rightbrain automated candidate verification so recruiters spend less time chasing paperwork and more time placing people.",
+      "meta_title": "Appco Candidate Verification Case Study",
+      "og_image": "/rb-blog-test/public/images/appco-automating-candidate-verification-recruiters/hero-1-appco.png"
+    },
+    "slug": "appco-automating-candidate-verification-recruiters",
+    "subtitle": "A Rightbrain-powered workflow for ID, right-to-work, and certification checks.",
+    "summary": "Appco uses a Rightbrain-powered verification workflow to reduce manual chasing, standardise checks, and move candidates from acceptance to start faster.",
+    "tags": [
+      "case-study",
+      "recruitment",
+      "workflow-automation",
+      "ai-agents",
+      "compliance"
+    ],
+    "title": "Appco: Automating Candidate Verification for Recruiters"
+  },
+  "_ingest": {
+    "run_id": "019e1c5c-1724-ef50-ae37-b9a0d8c3d431",
+    "task_id": "019e1604-0ad5-e71a-06f6-ddd0581d2438",
+    "ingested_at": "2026-05-12T13:24:25.922Z",
+    "source": "rightbrain-webhook"
+  }
+}
