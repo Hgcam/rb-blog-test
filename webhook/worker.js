@@ -106,11 +106,14 @@ export default {
 
     // Collect all image keys referenced in the output
     const referencedKeys = new Set();
-    if (output.post?.body_html) {
+    const collectKeysFromHtml = (html) => {
+      if (!html) return;
       const re = /data-blog-image="([^"]+)"/g;
       let m;
-      while ((m = re.exec(output.post.body_html)) !== null) referencedKeys.add(m[1]);
-    }
+      while ((m = re.exec(html)) !== null) referencedKeys.add(m[1]);
+    };
+    collectKeysFromHtml(output.post?.body_html);
+    collectKeysFromHtml(output.card?.card_html);
     if (output.post?.seo?.og_image && isImageFile(output.post.seo.og_image)) referencedKeys.add(output.post.seo.og_image);
     if (output.card?.thumbnail     && isImageFile(output.card.thumbnail))     referencedKeys.add(output.card.thumbnail);
     console.log('data-blog-image keys in output:', JSON.stringify([...referencedKeys]));
@@ -224,29 +227,40 @@ export default {
       return null;
     }
 
-    if (orderedPublicPaths.length > 0) {
-      if (output.post?.body_html) {
-        let bodyImageIdx = 0;
-        output.post.body_html = output.post.body_html.replace(
-          /(<img\b[^>]*?)data-blog-image="([^"]+)"([^>]*?)>/g,
-          (_m, before, key, after) => {
-            // Hero is image 0 (used for og_image/thumbnail), so body images start at index 1
-            const publicPath = resolveImage(key, bodyImageIdx + 1);
-            bodyImageIdx++;
-            if (!publicPath) {
-              console.warn(`Could not resolve data-blog-image="${key}" — leaving as-is`);
-              return _m;
-            }
-            console.log(`Resolved data-blog-image="${key}" → ${publicPath}`);
-            let tag = `${before}data-blog-image="${key}"${after}>`;
-            if (/\bsrc\s*=\s*["'][^"']*["']/.test(tag)) {
-              tag = tag.replace(/\bsrc\s*=\s*["'][^"']*["']/, `src="${publicPath}"`);
-            } else {
-              tag = tag.replace(/^<img\b/, `<img src="${publicPath}"`);
-            }
-            return tag;
+    // Rewrite all <img data-blog-image="..."> tags in an HTML string
+    // startingIndex is the positional fallback to use for the FIRST <img> encountered
+    function rewriteImgTags(html, startingIndex) {
+      let idx = 0;
+      return html.replace(
+        /(<img\b[^>]*?)data-blog-image="([^"]+)"([^>]*?)>/g,
+        (_m, before, key, after) => {
+          const publicPath = resolveImage(key, startingIndex + idx);
+          idx++;
+          if (!publicPath) {
+            console.warn(`Could not resolve data-blog-image="${key}" — leaving as-is`);
+            return _m;
           }
-        );
+          console.log(`Resolved data-blog-image="${key}" → ${publicPath}`);
+          let tag = `${before}data-blog-image="${key}"${after}>`;
+          if (/\bsrc\s*=\s*["'][^"']*["']/.test(tag)) {
+            tag = tag.replace(/\bsrc\s*=\s*["'][^"']*["']/, `src="${publicPath}"`);
+          } else {
+            tag = tag.replace(/^<img\b/, `<img src="${publicPath}"`);
+          }
+          return tag;
+        }
+      );
+    }
+
+    if (orderedPublicPaths.length > 0) {
+      // body_html: hero is image_1, so first body image starts at positional index 1
+      if (output.post?.body_html) {
+        output.post.body_html = rewriteImgTags(output.post.body_html, 1);
+      }
+
+      // card_html: the card thumbnail is the hero (positional index 0)
+      if (output.card?.card_html) {
+        output.card.card_html = rewriteImgTags(output.card.card_html, 0);
       }
 
       // Hero / thumbnail: try to resolve, fall back to image_1 (first uploaded image)
