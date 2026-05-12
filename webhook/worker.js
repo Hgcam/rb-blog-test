@@ -187,6 +187,7 @@ export default {
         f.original_filename,
         safeFilename,
         slugifyFilename(f.original_filename),
+        normalizeFilename(f.original_filename),  // broadest match: letters+digits only
       ];
       for (const key of keysForThisFile) {
         committedImages[key] = publicPath;
@@ -199,7 +200,9 @@ export default {
         output.post.body_html = output.post.body_html.replace(
           /(<img\b[^>]*?)data-blog-image="([^"]+)"([^>]*?)>/g,
           (_m, before, key, after) => {
-            const publicPath = committedImages[key] || committedImages[slugifyFilename(key)];
+            const publicPath = committedImages[key]
+              || committedImages[slugifyFilename(key)]
+              || committedImages[normalizeFilename(key)];
             if (!publicPath) {
               console.warn(`No committed image found for data-blog-image="${key}"`);
               return _m;
@@ -287,13 +290,22 @@ function isImageFile(filename) {
   return typeof filename === 'string' && /\.(png|jpe?g|gif|webp|svg|avif)$/i.test(filename);
 }
 
-// Strip extension and turn into a lowercase slug (matches what the task model tends to produce)
+// Strip extension and turn into a lowercase slug
 function slugifyFilename(filename) {
   return (filename || '')
-    .replace(/\.[^.]+$/, '')       // remove extension
+    .replace(/\.[^.]+$/, '')
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')   // non-alphanumeric → dash
-    .replace(/^-|-$/g, '');        // trim leading/trailing dashes
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+// Strip extension AND all non-alphanumeric chars — broadest matching key
+// e.g. "pipeline-1-workflow.png" and "pipeline1workflow" both → "pipeline1workflow"
+function normalizeFilename(filename) {
+  return (filename || '')
+    .replace(/\.[^.]+$/, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '');
 }
 
 function arrayBufferToBase64(buffer) {
