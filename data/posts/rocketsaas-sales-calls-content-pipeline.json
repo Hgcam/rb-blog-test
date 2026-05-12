@@ -134,7 +134,7 @@
   "_ingest": {
     "run_id": "019e1af8-7dd9-6576-9a51-41390f703f72",
     "task_id": "019e1604-0ad5-e71a-06f6-ddd0581d2438",
-    "ingested_at": "2026-05-12T06:56:04.624Z",
+    "ingested_at": "2026-05-12T06:56:14.024Z",
     "source": "rightbrain-webhook"
   }
 }
