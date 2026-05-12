@@ -116,7 +116,8 @@ export default {
     console.log('data-blog-image keys in output:', JSON.stringify([...referencedKeys]));
 
     // Download & commit each image file, track public path by every key that matches
-    const committedImages = {}; // data-blog-image key → public URL path
+    const committedImages = {};           // data-blog-image key → public URL path
+    const orderedPublicPaths = [];        // public paths in upload order, for positional fallback
     const ghBaseHeaders = {
       Authorization: `Bearer ${token}`,
       Accept: 'application/vnd.github+json',
@@ -182,31 +183,61 @@ export default {
       const publicPath = `${routePrefix}/public/images/${slug}/${safeFilename}`;
       console.log(`✔ Committed image ${imgRepoPath} → ${publicPath}`);
 
-      // Register this public path under every key that could reference this file
+      // Register under every reasonable lookup key for this file
+      const indexInImages = imageFiles.indexOf(f) + 1;  // 1-indexed
       const keysForThisFile = [
         f.original_filename,
         safeFilename,
         slugifyFilename(f.original_filename),
-        normalizeFilename(f.original_filename),  // broadest match: letters+digits only
+        normalizeFilename(f.original_filename),
+        `image_${indexInImages}`,    // positional: image_1, image_2, ...
+        `image-${indexInImages}`,    // dash variant
+        `image${indexInImages}`,     // no separator variant
       ];
+      if (indexInImages === 1) keysForThisFile.push('hero_image', 'hero-image', 'hero');
       for (const key of keysForThisFile) {
         committedImages[key] = publicPath;
       }
+      // Track ordered list for final positional fallback
+      orderedPublicPaths.push(publicPath);
     }
 
     // ── 5. Rewrite image references in the output ─────────────────
-    if (Object.keys(committedImages).length > 0) {
+    function resolveImage(key, positionalIndex = -1) {
+      // 1. Direct lookup variants
+      let path = committedImages[key]
+        || committedImages[slugifyFilename(key)]
+        || committedImages[normalizeFilename(key)];
+      if (path) return path;
+
+      // 2. Extract trailing digits from key (e.g. "pipeline-1-workflow" → "1", "image2" → "2")
+      const digitMatch = (key.match(/(\d+)/) || [])[1];
+      if (digitMatch) {
+        path = committedImages[`image_${digitMatch}`];
+        if (path) return path;
+      }
+
+      // 3. Positional fallback — use the N-th image in upload order
+      if (positionalIndex >= 0 && orderedPublicPaths[positionalIndex]) {
+        return orderedPublicPaths[positionalIndex];
+      }
+      return null;
+    }
+
+    if (orderedPublicPaths.length > 0) {
       if (output.post?.body_html) {
+        let bodyImageIdx = 0;
         output.post.body_html = output.post.body_html.replace(
           /(<img\b[^>]*?)data-blog-image="([^"]+)"([^>]*?)>/g,
           (_m, before, key, after) => {
-            const publicPath = committedImages[key]
-              || committedImages[slugifyFilename(key)]
-              || committedImages[normalizeFilename(key)];
+            // Hero is image 0 (used for og_image/thumbnail), so body images start at index 1
+            const publicPath = resolveImage(key, bodyImageIdx + 1);
+            bodyImageIdx++;
             if (!publicPath) {
-              console.warn(`No committed image found for data-blog-image="${key}"`);
+              console.warn(`Could not resolve data-blog-image="${key}" — leaving as-is`);
               return _m;
             }
+            console.log(`Resolved data-blog-image="${key}" → ${publicPath}`);
             let tag = `${before}data-blog-image="${key}"${after}>`;
             if (/\bsrc\s*=\s*["'][^"']*["']/.test(tag)) {
               tag = tag.replace(/\bsrc\s*=\s*["'][^"']*["']/, `src="${publicPath}"`);
@@ -217,11 +248,15 @@ export default {
           }
         );
       }
-      if (output.post?.seo?.og_image && committedImages[output.post.seo.og_image]) {
-        output.post.seo.og_image = committedImages[output.post.seo.og_image];
+
+      // Hero / thumbnail: try to resolve, fall back to image_1 (first uploaded image)
+      if (output.post?.seo?.og_image) {
+        const resolved = resolveImage(output.post.seo.og_image, 0);
+        if (resolved) output.post.seo.og_image = resolved;
       }
-      if (output.card?.thumbnail && committedImages[output.card.thumbnail]) {
-        output.card.thumbnail = committedImages[output.card.thumbnail];
+      if (output.card?.thumbnail) {
+        const resolved = resolveImage(output.card.thumbnail, 0);
+        if (resolved) output.card.thumbnail = resolved;
       }
     }
 
