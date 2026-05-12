@@ -1,0 +1,200 @@
+{
+  "card": {
+    "card_html": "<article class=\"post-card\"><a class=\"post-card__link\" href=\"/rb-blog-test/rocketsaas-sales-calls-content-assets/\"><figure class=\"post-card__media\"><img src=\"/rb-blog-test/public/images/rocketsaas-sales-calls-content-assets/hero-1-image.png\" data-blog-image=\"image_1\" alt=\"Results summary showing five calls to every call, an always-on pipeline, and five hours saved\" loading=\"lazy\" /></figure><div class=\"post-card__body\"><p class=\"post-card__eyebrow\">Case Study</p><h3 class=\"post-card__title\">Turning Sales Calls into Content Assets</h3><p class=\"post-card__summary\">See how RocketSaaS turns call transcripts into structured insight, content ideas, and client ops workflows.</p><ul class=\"post-card__tags\"><li>ai-workflows</li><li>sales-calls</li><li>content-ops</li><li>agencies</li><li>case-study</li></ul></div></a></article>",
+    "summary": "See how RocketSaaS turns call transcripts into structured insight, content ideas, and client ops workflows.",
+    "tags": [
+      "ai-workflows",
+      "sales-calls",
+      "content-ops",
+      "agencies",
+      "case-study"
+    ],
+    "thumbnail": "/rb-blog-test/public/images/rocketsaas-sales-calls-content-assets/hero-1-image.png",
+    "title": "Turning Sales Calls into Content Assets",
+    "type": "Case Study"
+  },
+  "copyedit": {
+    "issues": [
+      {
+        "after": "The problem",
+        "before": "THE PROBLEM",
+        "category": "formatting",
+        "rationale": "Converted all-caps section labels to title-style headings for blog readability."
+      },
+      {
+        "after": "RocketSaaS runs a high volume of calls—discovery sessions, client strategy meetings, podcast recordings, and kick-offs.",
+        "before": "RocketSaaS runs a high volume of calls - discovery sessions, client strategy meetings, podcast recordings, kick-offs.",
+        "category": "formatting",
+        "rationale": "Replaced a spaced hyphen with an em dash and added the Oxford comma."
+      },
+      {
+        "after": "Jamie, Director of Strategy, would periodically listen back to a handful of calls",
+        "before": "Jamie, Director of Strategy, would periodically re-listen to a handful of calls",
+        "category": "style",
+        "rationale": "Smoothed awkward wording without changing the meaning."
+      },
+      {
+        "after": "Even with a consistent prompt, outputs varied from call to call.",
+        "before": "Even with a consistent prompt, outputs varied call to call.",
+        "category": "grammar",
+        "rationale": "Added the missing preposition for standard phrasing."
+      },
+      {
+        "after": "The result was a process too slow to run consistently and too inconsistent to build on.",
+        "before": "The result was a process that was too slow to run consistently and too inconsistent to build on.",
+        "category": "style",
+        "rationale": "Tightened wordy phrasing."
+      },
+      {
+        "after": "Pipeline 1: Discovery calls → content engine",
+        "before": "PIPELINE 1 Discovery calls → content engine",
+        "category": "formatting",
+        "rationale": "Turned the pipeline label into a semantic subsection heading."
+      },
+      {
+        "after": "Google Sheets repository",
+        "before": "Google Sheets repo",
+        "category": "style",
+        "rationale": "Expanded shorthand for a clearer formal blog style."
+      },
+      {
+        "after": "Posts, podcast episodes, and newsletter angles—all shaped by what real prospects are saying",
+        "before": "Posts, podcast episodes, newsletter angles - all shaped by what real prospects are saying",
+        "category": "formatting",
+        "rationale": "Added the Oxford comma and replaced a spaced hyphen with an em dash."
+      },
+      {
+        "after": "with brand voice and guidelines baked into the agent from the start",
+        "before": "with tone of voice and brand guidelines baked into the agent from the start",
+        "category": "style",
+        "rationale": "Reduced repetition while preserving the point."
+      },
+      {
+        "after": "Workflow diagram showing Fathom, theme extraction, Google Sheets, trend analysis, and content ideas.",
+        "before": "Workflow:",
+        "category": "formatting",
+        "rationale": "Replaced the placeholder label with a descriptive figure and caption."
+      },
+      {
+        "after": "Pipeline 2: Client calls → ops and strategy",
+        "before": "PIPELINE 2 Client calls → ops and strategy",
+        "category": "formatting",
+        "rationale": "Turned the pipeline label into a semantic subsection heading."
+      },
+      {
+        "after": "Before, the team reviewed roughly five calls per month",
+        "before": "Before, the team reviewed roughly 5 calls per month",
+        "category": "formatting",
+        "rationale": "Spelled out a number under 10 in body copy."
+      },
+      {
+        "after": "Jamie’s time moved upstream.",
+        "before": "Jamie’s time moved upstream",
+        "category": "formatting",
+        "rationale": "Standardised list item punctuation."
+      },
+      {
+        "after": "strategic judgement—spotting trends across the dataset",
+        "before": "strategic judgement - spotting trends across the dataset",
+        "category": "formatting",
+        "rationale": "Used an em dash for a parenthetical aside."
+      },
+      {
+        "after": "not a folder of recordings, but a queryable dataset",
+        "before": "not a folder of recordings, but a queryable dataset",
+        "category": "grammar",
+        "rationale": "Recast the sentence around a list item to avoid a comma splice."
+      },
+      {
+        "after": "We spend a huge amount of time on calls.",
+        "before": "We spend a huge amount of time on calls.",
+        "category": "formatting",
+        "rationale": "Formatted the testimonial as a blockquote rather than leaving it embedded in an image."
+      },
+      {
+        "after": "In development: Kick-off call → strategy and onboarding",
+        "before": "IN DEVELOPMENT Kick-off call → strategy and onboarding",
+        "category": "formatting",
+        "rationale": "Converted the label and title into a semantic heading."
+      },
+      {
+        "after": "creating onboarding tasks in Asana, assigning them, sending access requests, setting up workspaces, and briefing the right people",
+        "before": "creating and assigning onboarding tasks in Asana, getting access requests out, setting up workspaces, briefing the right people",
+        "category": "grammar",
+        "rationale": "Made the list parallel and easier to scan."
+      },
+      {
+        "after": "where a team is running a high volume of calls—discovery, strategy, client, or internal—and finds",
+        "before": "where a team is running a high volume of calls - discovery, strategy, client, internal, and finding",
+        "category": "grammar",
+        "rationale": "Fixed the sentence structure and replaced the spaced hyphen with an em dash."
+      },
+      {
+        "after": "the people with the most context—heads of strategy, account directors, and senior consultants—",
+        "before": "the people with the most context (heads of strategy, account directors, senior consultants)",
+        "category": "formatting",
+        "rationale": "Used em dashes for the aside and added the Oxford comma."
+      },
+      {
+        "after": "taking insights from one place and plugging them into an LLM",
+        "before": "taking insights from one place and plugging them into an LLM",
+        "category": "formatting",
+        "rationale": "Moved the explanation out of parentheses for a cleaner sentence."
+      },
+      {
+        "after": "New leads are automatically enriched to provide context for marketing and sales.",
+        "before": "All new leads are automatically enriched to provide context for marketing and sales",
+        "category": "style",
+        "rationale": "Tightened the bullet and standardised punctuation."
+      },
+      {
+        "after": "ABM: Account lists are enriched for more accurate targeting",
+        "before": "ABM: Enriching account lists to be used for more accurate targeting",
+        "category": "style",
+        "rationale": "Made the bullet parallel with the CRM enrichment item."
+      },
+      {
+        "after": "<a href=\"https://rightbrain.ai/demo\">rightbrain.ai/demo</a>",
+        "before": "rightbrain.ai/demo",
+        "category": "formatting",
+        "rationale": "Converted the bare URL into a full, valid link."
+      }
+    ],
+    "stats": {
+      "by_category": {
+        "formatting": 13,
+        "grammar": 4,
+        "style": 7,
+        "typo": 0
+      },
+      "total_issues": 24
+    }
+  },
+  "post": {
+    "body_html": "<p>RocketSaaS runs a high volume of calls: discovery sessions, client strategy meetings, podcast recordings, and kick-offs. Each one creates raw material: market signals, buyer pain points, positioning cues, and content angles.</p><p>Rightbrain helped RocketSaaS turn that raw material into an always-on system. Instead of reviewing a handful of calls each month, every call is now processed automatically and routed into the right workflow.</p><h2>The problem</h2><h3>Valuable insight, locked in recordings</h3><p>Turning call recordings into useful material used to be a manual job. Jamie, Director of Strategy, would periodically listen back to a handful of calls, build a meta prompt, and piece together an analysis in ChatGPT. Done well, it took anywhere from 30 minutes to an hour per session.</p><p>That meant the work happened monthly at most, and only for a handful of calls. Most calls never made it into the analysis.</p><p>The problem was not just time. Even with a consistent prompt, outputs varied from call to call. There was no guarantee the analysis would surface the same categories, use the same structure, or apply the same lens to every conversation.</p><p>The result was a process too slow to run consistently and too inconsistent to build on. Most of the insight stayed locked in recordings. The bottleneck was not having things to say. It was the work of turning conversations into content.</p><h2>The workflow</h2><h3>One system, two pipelines</h3><p>RocketSaaS built two separate Rightbrain workflows, each routing a different call type to a different destination. Both run automatically via Fathom the moment a call ends.</p><h3>Pipeline 1: Discovery calls → content engine</h3><p>When a discovery call completes, an agent pulls the transcript and extracts structured insight: why the prospect is in market, how they heard about RocketSaaS, what channels they care about, what challenges they are facing, and what that signals about broader market trends.</p><p>Each extraction goes into a structured Google Sheets repository, building over time into a dataset of every discovery conversation the team has had. A second agent runs across this dataset to identify patterns: which problems are coming up repeatedly, which channels are gaining momentum, and what language prospects use to describe their pain.</p><p>Those insights feed directly into content ideation. Posts, podcast episodes, and newsletter angles are all shaped by what real prospects are saying, on brand, consistent every time, with brand voice and guidelines baked into the agent from the start.</p><figure><img src=\"/rb-blog-test/public/images/rocketsaas-sales-calls-content-assets/pipeline-1-workflow.png\" data-blog-image=\"image_2\" alt=\"Discovery call workflow from Fathom to theme extraction, Google Sheets, trend analysis, and content ideas\" loading=\"lazy\" /><figcaption>Discovery calls are routed from Fathom through theme extraction, a Google Sheets repository, trend analysis, and content ideas.</figcaption></figure><h3>Pipeline 2: Client calls → ops and strategy</h3><p>When a kick-off or strategy call ends, a separate workflow routes the transcript into ops. Action items are extracted and pushed to Slack as notifications, ensuring nothing from the call falls through the cracks, regardless of who was in the room.</p><p>This pipeline also feeds into client Notion workspaces and Google Docs, building out strategy documentation, next steps, and follow-up material directly from the call rather than from scratch after it.</p><figure><img src=\"/rb-blog-test/public/images/rocketsaas-sales-calls-content-assets/pipeline-2-workflow.png\" data-blog-image=\"image_3\" alt=\"Client call workflow from Fathom to action extraction, Slack notification, and Notion or Google Docs\" loading=\"lazy\" /><figcaption>Client calls are routed from Fathom through action extraction, Slack notifications, and Notion or Google Docs.</figcaption></figure><p>The content team still does a final review pass before anything is published. The difference is that they are editing and choosing, not staring at a blank page.</p><h2>What changed</h2><h3>From ad hoc analysis to a strategic asset</h3><ul><li>Every call is now analysed. Before, the team reviewed roughly five calls per month, and only when someone had time. Now every call is processed automatically, with no manual trigger required.</li><li>Outputs are consistent. The same structure, categories, and brand voice are applied to every call. There is no more variation from session to session or prompt drift between analyses.</li><li>Jamie’s time moved upstream. The hours previously spent on manual extraction are now spent on work that requires strategic judgement—spotting trends across the dataset, shaping the content narrative, and deciding what the business needs to say next.</li><li>The team now has a searchable repository of structured insight from every discovery call. It is not a folder of recordings, but a queryable dataset that feeds into quarterly trend analysis and market positioning.</li><li>Content quality and consistency have improved. Better insight in means better content out, with a direct impact on engagement and inbound demo bookings.</li></ul><blockquote><p>We spend a huge amount of time on calls. There’s so much good data in them, but it was always in an unstructured format. This takes that unstructured data and turns it into part of our core workflows.</p><p><strong>Joe McLaughlin</strong>, Account Director at Rocket SaaS</p></blockquote><h2>What’s next</h2><h3>Extending the pipeline into client delivery</h3><p>The discovery-to-content pipeline proved the model. RocketSaaS is now building a third workflow that takes the same approach deeper into client delivery.</p><h4>In development: Kick-off call → strategy and onboarding</h4><p>When a new client kick-off call ends, the agent will take the transcript alongside the kick-off document and begin the strategy preparation work automatically: pulling together the research, drafting the initial messaging framework, starting the audit, creating onboarding tasks in Asana, assigning them, sending access requests, setting up workspaces, and briefing the right people.</p><p>The account director arrives at the strategy stage with a brief already built and the admin already handled, instead of spending the first week assembling the inputs manually.</p><p>The same system. A different call type. A different destination. Running in the background.</p><h2>Who this is for</h2><h3>Any agency that wants more insight from calls without manual work</h3><p>This workflow applies anywhere a team is running a high volume of calls—discovery, strategy, client, or internal—and finds that the insight generated rarely makes it further than the recording.</p><p>It is particularly effective for agencies and service businesses where the people with the most context—heads of strategy, account directors, and senior consultants—are also the ones doing ad hoc manual extraction work, taking insights from one place and plugging them into an LLM. Automating that layer frees them to do what actually requires their expertise.</p><p>If your team already uses Fathom, Notion, Slack, or Google Docs, there is nothing new to learn. The pipeline runs inside the tools you already use.</p><h2>How else are marketing agencies using Rightbrain?</h2><p>With Rightbrain, marketing agencies can stack different agents on the way to becoming AI-native. Other agents marketing agencies have been building include:</p><ul><li><strong>CRM enrichment:</strong> New leads are automatically enriched to provide context for marketing and sales.</li><li><strong>ABM:</strong> Account lists are enriched for more accurate targeting in client ad accounts and tailored, automated outreach campaigns.</li></ul><h2>See this running in your stack</h2><p>We will map your current call workflow and build the first pipeline with you in a single session.</p><p><a href=\"https://rightbrain.ai/demo\">rightbrain.ai/demo</a></p>",
+    "published_at": "2026-05-12",
+    "reading_time_minutes": 6,
+    "seo": {
+      "meta_description": "See how RocketSaaS uses Rightbrain to turn every call into structured insight, content ideas, and client ops without manual extraction.",
+      "meta_title": "RocketSaaS Sales Call Workflow Case Study",
+      "og_image": "/rb-blog-test/public/images/rocketsaas-sales-calls-content-assets/hero-1-image.png"
+    },
+    "slug": "rocketsaas-sales-calls-content-assets",
+    "subtitle": "A Rightbrain workflow for turning call transcripts into structured insight, content ideas, and client ops.",
+    "summary": "RocketSaaS uses Rightbrain to process every call automatically, route insights into content and ops workflows, and reduce manual extraction work.",
+    "tags": [
+      "ai-workflows",
+      "sales-calls",
+      "content-ops",
+      "agencies",
+      "case-study"
+    ],
+    "title": "Turning Sales Calls into Content Assets"
+  },
+  "_ingest": {
+    "run_id": "019e1c11-0551-8d21-4574-8731e5aa80af",
+    "task_id": "019e1604-0ad5-e71a-06f6-ddd0581d2438",
+    "ingested_at": "2026-05-12T12:02:39.530Z",
+    "source": "rightbrain-webhook"
+  }
+}
