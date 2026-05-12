@@ -236,6 +236,7 @@ hr {
 
 /* ── Theme toggle button ─────────────────────────────── */
 .theme-toggle {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -254,7 +255,10 @@ hr {
   color: var(--fg-secondary);
 }
 
-.theme-toggle svg {
+.theme-toggle__icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 16px;
   height: 16px;
   fill: none;
@@ -262,6 +266,15 @@ hr {
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
+  transform: translate(-50%, -50%) scale(0.6) rotate(-90deg);
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+[data-theme="light"] .theme-toggle__icon--sun,
+[data-theme="dark"]  .theme-toggle__icon--moon {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1) rotate(0);
 }
 
 /* ── Button component ────────────────────────────────── */
