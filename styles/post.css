@@ -8,9 +8,12 @@
   padding-bottom: var(--space-10xl);
 }
 
-/* Single-column layout — sidebar reserved for future use */
+/* Single-column layout — content centered within the page container */
 .post-page__layout {
   width: 100%;
+  max-width: var(--paragraph-max-width);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ── Breadcrumb ──────────────────────────────────────── */

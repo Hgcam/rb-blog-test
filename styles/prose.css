@@ -7,20 +7,14 @@
  */
 
 .prose {
-  width: 100%;
+  max-width: var(--paragraph-max-width);
+  margin-left: auto;
+  margin-right: auto;
   color: var(--text-primary);
 
   /* Readable body type */
   font-size: var(--text-lg);
   line-height: 1.7;
-}
-
-/* Constrain line length on text-flow elements only */
-.prose p,
-.prose ul,
-.prose ol,
-.prose blockquote {
-  max-width: var(--paragraph-max-width);
 }
 
 @media (max-width: 767px) {
