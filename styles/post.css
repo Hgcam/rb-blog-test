@@ -237,7 +237,7 @@
   .post-sidebar {
     display: block;
     position: sticky;
-    top: 88px; /* header height + buffer */
+    top: calc(var(--site-header-height) + var(--space-xl));
   }
 }
 

@@ -2,6 +2,7 @@
 <html lang="{{site.language}}" data-theme="{{site.themeDefault}}">
 <head>
 {{seo}}
+{{#if site.routePrefix}}<base href="{{site.routePrefix}}/">{{/if}}
 
 <!-- Styles: loaded in dependency order -->
 <link rel="stylesheet" href="{{site.assetBase}}/styles/tokens.css">
@@ -90,8 +91,10 @@
   if (navToggle && nav) {
     navToggle.addEventListener('click', function () {
       var expanded = navToggle.getAttribute('aria-expanded') === 'true';
-      navToggle.setAttribute('aria-expanded', String(!expanded));
-      nav.classList.toggle('is-open', !expanded);
+      var nextOpen = !expanded;
+      navToggle.setAttribute('aria-expanded', String(nextOpen));
+      navToggle.setAttribute('aria-label', nextOpen ? 'Close navigation menu' : 'Open navigation menu');
+      nav.classList.toggle('is-open', nextOpen);
     });
   }
 

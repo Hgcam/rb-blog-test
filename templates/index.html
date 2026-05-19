@@ -21,9 +21,9 @@
         {{#each allTags}}
         <li>
           <a
-            href="{{site.routePrefix}}/?tag={{.}}"
+            href="{{site.routePrefix}}/?tag={{slug}}"
             class="tag"
-          >{{.}}</a>
+          >{{label}}</a>
         </li>
         {{/each}}
       </ul>

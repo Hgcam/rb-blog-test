@@ -24,6 +24,7 @@ import { validatePost } from './validate.js';
 import { render } from './lib/render.js';
 import { buildSitemap, buildRobots } from './lib/sitemap.js';
 import { buildAtomFeed } from './lib/rss.js';
+import { formatTagLabel, formatTagsInCardHtml, tagEntries } from './lib/tags.js';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -78,7 +79,7 @@ function buildPostJsonLd(post, seoCanonical, siteName) {
     publisher: {
       '@type': 'Organization',
       name: siteName,
-      logo: { '@type': 'ImageObject', url: '/public/favicon.svg' },
+      logo: { '@type': 'ImageObject', url: '/public/favicon.png' },
     },
     keywords: (post.tags || []).join(', '),
   };
@@ -177,6 +178,10 @@ async function main() {
       );
     }
 
+    if (parsed.card?.card_html) {
+      parsed.card.card_html = formatTagsInCardHtml(parsed.card.card_html);
+    }
+
     posts.push({ ...parsed, _mtime: mtime, _file: file });
   }
 
@@ -226,6 +231,8 @@ async function main() {
     const relatedPostsHtml = related.map(r => r.card.card_html).join('\n');
 
     const primaryTag = (post.tags || [])[0] || '';
+    const primaryTagLabel = primaryTag ? formatTagLabel(primaryTag) : '';
+    const postTags = tagEntries(post.tags || []);
     const ogImage = post.seo?.og_image
       ? post.seo.og_image
       : `${site.baseUrl}/public/og-default.png`;
@@ -238,7 +245,7 @@ async function main() {
       'seo.ogTitle': post.seo?.meta_title || post.title,
       'seo.ogImage': ogImage,
       'seo.articlePublishedTime': post.published_at || '',
-      'seo.articleTags': (post.tags || []),
+      'seo.articleTags': postTags.map((t) => t.label),
       'seo.jsonLd': buildPostJsonLd(post, canonical, site.name),
     };
 
@@ -254,6 +261,8 @@ async function main() {
       post: {
         ...post,
         primaryTag,
+        primaryTagLabel,
+        tags: postTags,
         published_at_formatted: formatDate(post.published_at),
       },
       card,
@@ -302,7 +311,8 @@ async function main() {
 
   // 6. Render index page
   const indexCanonical = `${site.baseUrl}${site.routePrefix}/`;
-  const allTags = [...new Set(posts.flatMap(p => p.post.tags || []))].sort();
+  const allTagSlugs = [...new Set(posts.flatMap(p => p.post.tags || []))].sort();
+  const allTags = tagEntries(allTagSlugs);
 
   const cardsHtml = posts.map(p => p.card.card_html).join('\n');
 
@@ -363,11 +373,10 @@ async function main() {
     console.log('  ✔  dist/public/');
   }
 
-  // Copy favicon to dist root for direct /favicon.svg access
-  const faviconSrc = join(PUBLIC_DIR, 'favicon.svg');
-  const faviconDst = join(DIST, 'favicon.svg');
-  if (existsSync(faviconSrc)) {
-    writeFileSync(faviconDst, readFileSync(faviconSrc));
+  // Copy favicon to dist root (served at <routePrefix>/favicon.png)
+  const faviconPng = join(PUBLIC_DIR, 'favicon.png');
+  if (existsSync(faviconPng)) {
+    writeFileSync(join(DIST, 'favicon.png'), readFileSync(faviconPng));
   }
 
   // 8. Sitemap, robots.txt, feed.xml

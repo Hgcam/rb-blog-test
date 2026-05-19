@@ -1,17 +1,37 @@
 <a class="skip-link" href="#main-content">Skip to content</a>
 
 <header class="site-header" role="banner">
-  <div class="container site-header__inner">
+  <div class="site-header__inner">
 
-    <a class="site-header__logo" href="{{site.baseUrl}}/" aria-label="{{site.name}} home">
-      <img src="{{site.assetBase}}/public/logo.svg" alt="{{site.name}}" class="site-header__logo-mark" width="28" height="28" aria-hidden="true">
-      <span class="site-header__logo-name">{{site.name}}</span>
+    <a class="site-header__logo" href="https://rightbrain.ai/" aria-label="Rightbrain home">
+      <img src="{{site.assetBase}}/public/logo.svg" alt="" class="site-header__logo-mark" width="28" height="28" aria-hidden="true">
+      <span class="site-header__logo-name">Rightbrain.ai</span>
     </a>
 
     <nav class="site-header__nav" aria-label="Primary navigation" id="primary-nav">
-      <a href="{{site.baseUrl}}/">Product</a>
-      <a href="{{site.baseUrl}}/resources-library/" aria-current="{{nav.resourcesCurrent}}">Resources</a>
-      <a href="{{site.baseUrl}}/book-demo/">Book Demo</a>
+      <a href="https://rightbrain.ai/b2b-services">For B2B Services</a>
+      <a href="https://rightbrain.ai/platform-partners">For Partners</a>
+      <a href="https://rightbrain.ai/resources-library" aria-current="{{nav.resourcesCurrent}}">Resources</a>
+      <a href="https://docs.rightbrain.ai/docs/getting-started/introduction">Docs</a>
+
+      <div class="site-header__nav-mobile-actions">
+        <a
+          class="site-header__slack"
+          href="https://rightbrain-developers.slack.com/join/shared_invite/zt-2mt5nyavm-IiYim_3HzoJki7wr8oeHug#/shared-invite/email"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Join the Rightbrain Slack community"
+        >
+          <img src="{{site.assetBase}}/public/slack-icon.png" alt="" class="site-header__slack-icon" width="16" height="16" aria-hidden="true">
+          <span class="site-header__slack-label">Slack</span>
+        </a>
+        <a
+          class="btn btn--primary site-header__cta"
+          href="https://calendly.com/flo-rightbrain/intro-call"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Book a Call</a>
+      </div>
     </nav>
 
     <div class="site-header__actions">
@@ -21,7 +41,6 @@
         aria-label="Toggle colour scheme"
         type="button"
       >
-        <!-- Sun icon (shown in dark mode) -->
         <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true">
           <circle cx="12" cy="12" r="5"/>
           <line x1="12" y1="1" x2="12" y2="3"/>
@@ -33,11 +52,27 @@
           <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
           <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
         </svg>
-        <!-- Moon icon (shown in light mode) -->
         <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
         </svg>
       </button>
+
+      <a
+        class="site-header__slack site-header__slack--desktop"
+        href="https://rightbrain-developers.slack.com/join/shared_invite/zt-2mt5nyavm-IiYim_3HzoJki7wr8oeHug#/shared-invite/email"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Join the Rightbrain Slack community"
+      >
+        <img src="{{site.assetBase}}/public/slack-icon.png" alt="" class="site-header__slack-icon" width="16" height="16" aria-hidden="true">
+      </a>
+
+      <a
+        class="btn btn--primary site-header__cta site-header__cta--desktop"
+        href="https://calendly.com/flo-rightbrain/intro-call"
+        target="_blank"
+        rel="noopener noreferrer"
+      >Book a Call</a>
 
       <button
         class="nav-toggle"

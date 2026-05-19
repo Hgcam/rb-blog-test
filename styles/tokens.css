@@ -127,6 +127,10 @@
   --container-max-width:      1280px;
   --container-padding-mobile: 16px;
   --container-padding-desktop: 32px;
+  --site-header-height:           52px;
+  --site-header-padding-mobile:   16px;
+  --site-header-padding-tablet:   40px;
+  --site-header-padding-desktop:  80px;
 }
 
 /* ── Dark mode ─────────────────────────────────────── */

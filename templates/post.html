@@ -6,7 +6,7 @@
       <a href="{{site.baseUrl}}/resources-library/">Resources</a>
       <span class="breadcrumb__separator" aria-hidden="true">›</span>
       {{#if post.primaryTag}}
-      <a href="{{site.baseUrl}}/resources-library/?tag={{post.primaryTag}}">{{post.primaryTag}}</a>
+      <a href="{{site.baseUrl}}/resources-library/?tag={{post.primaryTag}}">{{post.primaryTagLabel}}</a>
       <span class="breadcrumb__separator" aria-hidden="true">›</span>
       {{/if}}
       <span class="breadcrumb__current">{{post.title}}</span>
@@ -21,7 +21,7 @@
           <!-- Post header -->
           <header class="post-header">
             {{#if post.primaryTag}}
-            <p class="post-header__eyebrow">{{post.primaryTag}}</p>
+            <p class="post-header__eyebrow">{{post.primaryTagLabel}}</p>
             {{/if}}
 
             <h1 class="post-header__title" itemprop="headline">{{post.title}}</h1>
@@ -36,7 +36,7 @@
             {{#if post.tags}}
             <ul class="post-meta__tags" aria-label="Tags">
               {{#each post.tags}}
-              <li>{{.}}</li>
+              <li>{{label}}</li>
               {{/each}}
             </ul>
             {{/if}}

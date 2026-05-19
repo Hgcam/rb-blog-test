@@ -3,27 +3,32 @@
  * preview.js — minimal static file server for local development.
  *
  * Reads routePrefix from config.json and mounts dist/ at that prefix,
- * so card links (e.g. /resources/attio-account-researcher/) resolve correctly.
+ * so card links (e.g. /rb-blog-test/my-post/) resolve correctly.
  *
  * Access at: http://localhost:4000<routePrefix>/
+ * (trailing slash required — requests without it are redirected)
  */
 import { createServer } from 'node:http';
-import { createReadStream, statSync, readFileSync } from 'node:fs';
+import { createReadStream, statSync, readFileSync, existsSync } from 'node:fs';
 import { join, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const ROOT = join(__dirname, '..');
 const DIST = join(ROOT, 'dist');
-const PORT = 4000;
+const PORT = Number(process.env.PORT) || 4000;
 
-// Read routePrefix from config.json (default to '' if missing)
 let routePrefix = '';
 try {
   const cfg = JSON.parse(readFileSync(join(ROOT, 'config.json'), 'utf8'));
   routePrefix = (cfg.site?.routePrefix || '').replace(/\/$/, '');
 } catch {
-  // ignore — serve from root
+  // serve from root
+}
+
+if (!existsSync(join(DIST, 'index.html'))) {
+  console.error('✗  dist/ is missing. Run: npm run build');
+  process.exit(1);
 }
 
 const MIME = {
@@ -41,15 +46,44 @@ const MIME = {
   '.txt':   'text/plain',
 };
 
-createServer((req, res) => {
-  let urlPath = req.url.split('?')[0];
+function hasFileExtension(pathname) {
+  const base = pathname.split('/').pop() || '';
+  return base.includes('.');
+}
 
-  // Strip routePrefix so dist/ is the root for all routes
-  if (routePrefix && urlPath.startsWith(routePrefix)) {
-    urlPath = urlPath.slice(routePrefix.length) || '/';
+createServer((req, res) => {
+  const [pathname, search = ''] = req.url.split('?');
+  const qs = search ? `?${search}` : '';
+
+  // Redirect site root → blog prefix
+  if (routePrefix && (pathname === '/' || pathname === '')) {
+    res.writeHead(302, { Location: `${routePrefix}/${qs}` });
+    res.end();
+    return;
   }
 
-  // Try exact path, then path/index.html
+  // Trailing slash: relative ./styles/ breaks without it (page looks blank)
+  if (
+    routePrefix
+    && pathname.startsWith(routePrefix)
+    && !pathname.endsWith('/')
+    && !hasFileExtension(pathname)
+  ) {
+    res.writeHead(301, { Location: `${pathname}/${qs}` });
+    res.end();
+    return;
+  }
+
+  let urlPath = pathname;
+
+  if (routePrefix && urlPath.startsWith(routePrefix)) {
+    urlPath = urlPath.slice(routePrefix.length) || '/';
+  } else if (routePrefix) {
+    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end(`404 Not Found\n\nBlog is served at http://localhost:${PORT}${routePrefix}/\n`);
+    return;
+  }
+
   const candidates = [
     join(DIST, urlPath),
     join(DIST, urlPath, 'index.html'),
@@ -62,19 +96,24 @@ createServer((req, res) => {
         const contentType = MIME[extname(filePath)] || 'application/octet-stream';
         res.writeHead(200, { 'Content-Type': contentType });
         createReadStream(filePath).pipe(res);
-        console.log(`  200 ${req.url}`);
         return;
       }
     } catch {
-      // not found, try next candidate
+      // try next candidate
     }
   }
 
-  res.writeHead(404, { 'Content-Type': 'text/plain' });
+  res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
   res.end('404 Not Found');
-  console.log(`  404 ${req.url}`);
 }).listen(PORT, () => {
-  console.log(`\nPreview at http://localhost:${PORT}${routePrefix}/`);
-  console.log(`  Directory:   http://localhost:${PORT}${routePrefix}/`);
-  console.log(`  Sample post: http://localhost:${PORT}${routePrefix}/attio-account-researcher/\n`);
+  const home = routePrefix
+    ? `http://localhost:${PORT}${routePrefix}/`
+    : `http://localhost:${PORT}/`;
+  console.log(`\n✅  Blog preview running`);
+  console.log(`    ${home}`);
+  if (routePrefix) {
+    console.log(`    (open this URL — include the trailing slash)\n`);
+  } else {
+    console.log('');
+  }
 });
