@@ -114,11 +114,9 @@ async function main() {
   const config = JSON.parse(readFileSync(join(ROOT, 'config.json'), 'utf8'));
   const { site } = config;
 
-  // Compute asset base: relative path from a post page (dist/<slug>/index.html) back to dist/.
-  // Post is one directory deep: dist/<slug>/ → ../styles/
-  // Index is at dist/ root → ./styles/
-  const assetBasePost = '..';
-  const assetBaseIndex = '.';
+  // All pages set <base href="routePrefix/"> in layout.html, so asset paths must be
+  // relative to that base (./styles/…), not ../ (which resolves above the prefix).
+  const assetBase = '.';
 
   // 2. Load & validate posts
   let postFiles = [];
@@ -252,7 +250,7 @@ async function main() {
     const ctx = {
       site: {
         ...site,
-        assetBase: assetBasePost,
+        assetBase,
         year,
         twitterHandle: config.social?.twitter || '',
         routePrefix,
@@ -321,7 +319,7 @@ async function main() {
   const indexCtx = {
     site: {
       ...site,
-      assetBase: assetBaseIndex,
+      assetBase,
       year,
       twitterHandle: config.social?.twitter || '',
       routePrefix: site.routePrefix,
