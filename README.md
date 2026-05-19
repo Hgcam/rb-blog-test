@@ -1,17 +1,42 @@
 # Rightbrain Blog
 
-A self-contained, framework-free static blog. Plain HTML/CSS, zero runtime dependencies, fully deployable to any static host.
+A self-contained, framework-free static blog. Plain HTML/CSS, zero npm dependencies, deployable to any static host.
 
-- **Directory page** — `/resources/` listing all posts with filter chips
-- **Post page** — `/resources/<slug>/` full article with SEO, OG tags, JSON-LD, share links
+- **Directory page** — `<routePrefix>/` listing posts with tag filter chips (`?tag=`)
+- **Post page** — `<routePrefix>/<slug>/` full article with SEO, Open Graph, JSON-LD, share links, and related posts
 - **Feeds** — `sitemap.xml`, `robots.txt`, `feed.xml` (Atom)
+- **Theme** — light/dark toggle (floating button, bottom-left); preference stored in `localStorage`
+- **Navbar** — shared header/footer aligned with rightbrain.ai (external nav links; Resources highlights on blog pages)
+
+The publish path is controlled by `site.routePrefix` in `config.json` (e.g. `/resources` on production, `/rb-blog-test` for staging).
 
 ---
 
 ## Requirements
 
-- Node.js 20+ (`cat .nvmrc` shows the exact version; `nvm use` picks it up automatically)
-- No npm packages required — zero runtime deps
+- Node.js 20+ (see `.nvmrc`; run `nvm use` if you use nvm)
+- No `npm install` — build, validate, ingest, and preview are vanilla Node.js ESM
+
+---
+
+## Project layout
+
+```
+blog/
+├── config.json           # Site URL, routePrefix, directory/post CTAs
+├── data/posts/*.json     # One JSON file per post (task output contract)
+├── public/               # Static assets (logo, fonts, favicon, post images)
+├── styles/               # CSS (tokens, base, prose, card, index, post)
+├── templates/            # layout, index, post, partials (header, footer, seo)
+├── scripts/
+│   ├── build.js          # JSON → dist/
+│   ├── validate.js       # Post contract checks
+│   ├── preview.js        # Local server with routePrefix support
+│   ├── ingest.js         # Pull a task run from the Rightbrain API
+│   └── lib/              # render, tags, sitemap, rss
+├── dist/                 # Build output (gitignored)
+└── .github/workflows/    # GitHub Pages deploy on push to main
+```
 
 ---
 
@@ -19,53 +44,65 @@ A self-contained, framework-free static blog. Plain HTML/CSS, zero runtime depen
 
 ```bash
 cd blog/
-# Optional: if you use nvm
-nvm use
+nvm use   # optional
 ```
-
-No `npm install` needed. The build, validate, and ingest scripts are all vanilla Node.js ESM.
 
 ---
 
 ## Building the site
 
 ```bash
-node scripts/build.js
-# or
 npm run build
+# or: node scripts/build.js
 ```
 
 Output lands in `dist/`. The build:
 
-1. Loads `config.json` for site-wide settings
-2. Validates every `data/posts/*.json` against the task output contract
-3. Sorts posts by `published_at` descending
+1. Loads `config.json`
+2. Validates every `data/posts/*.json`
+3. Sorts posts by `published_at` descending (mtime tiebreak)
 4. Renders each post → `dist/<slug>/index.html`
 5. Renders the directory → `dist/index.html`
 6. Copies `styles/` and `public/` into `dist/`
-7. Emits `dist/sitemap.xml`, `dist/robots.txt`, `dist/feed.xml`
+7. Copies `public/favicon.png` → `dist/favicon.png`
+8. Emits `sitemap.xml`, `robots.txt`, `feed.xml`
 
-Build exits non-zero if any post fails validation, so bad data never reaches `dist/`.
+All pages set `<base href="<routePrefix>/">` so CSS, images, and scripts resolve correctly on nested post URLs. Card `href`s in `card_html` are rewritten to match `routePrefix`. Tag slugs in JSON (e.g. `case-study`) are displayed as Title Case (e.g. `Case Study`) via `scripts/lib/tags.js`.
+
+Build exits non-zero if any post fails validation.
+
+Other scripts:
+
+```bash
+npm run validate   # validate all posts (or one slug)
+npm run ingest     # fetch a task run → data/posts/<slug>.json
+npm run clean      # remove dist/
+```
 
 ---
 
 ## Local preview
 
 ```bash
+npm run build
 npm run preview
 ```
 
-Opens a minimal HTTP server at `http://localhost:4000` serving `dist/`. No hot-reload — rebuild to see changes.
+Serves `dist/` at `http://localhost:4000<routePrefix>/` (port overridable with `PORT`).
+
+**Important:** use the trailing slash (e.g. `http://localhost:4000/rb-blog-test/`). Requests without it are redirected so relative assets load correctly.
+
+No hot-reload — rebuild after template or data changes.
 
 ---
 
 ## Adding a post
 
-### Option A — manual paste (simplest)
+### Option A — manual paste
 
-1. Run your Rightbrain task with the `.docx` file uploaded.
-2. Copy the JSON output from the task run result.
-3. Save it as `data/posts/<slug>.json` where `<slug>` matches `post.slug` in the JSON.
+1. Run your Rightbrain task with the `.docx` uploaded.
+2. Copy the JSON output from the task run.
+3. Save as `data/posts/<slug>.json` where `<slug>` matches `post.slug`.
 4. Run `npm run build`.
 
 ### Option B — API ingest
@@ -76,21 +113,18 @@ node scripts/ingest.js <run_id>
 npm run build
 ```
 
-`ingest.js` fetches the completed task run from the Rightbrain API, validates the `post.slug`, and writes `data/posts/<slug>.json`. It's idempotent — re-running with the same `run_id` safely overwrites.
+`ingest.js` fetches the completed task run, validates `post.slug`, and writes `data/posts/<slug>.json`. Re-running the same `run_id` overwrites safely.
 
-`RIGHTBRAIN_BASE_URL` can be overridden if you use a self-hosted instance (default: `https://api.rightbrain.ai/v1`).
+`RIGHTBRAIN_BASE_URL` defaults to `https://api.rightbrain.ai/v1` (override for self-hosted).
 
 ---
 
-## Validating posts without building
+## Validating posts
 
 ```bash
-node scripts/validate.js              # validate all posts
-node scripts/validate.js attio-account-researcher   # validate one post
 npm run validate
+node scripts/validate.js my-post-slug
 ```
-
-Checks every post against the task output contract:
 
 | Rule | Detail |
 |------|--------|
@@ -105,92 +139,95 @@ Checks every post against the task output contract:
 
 ## Site configuration
 
-Edit `config.json` in the root of this folder:
+Edit `config.json`:
 
 ```json
 {
   "site": {
     "name": "Rightbrain",
     "baseUrl": "https://rightbrain.ai",
-    "routePrefix": "/resources"
+    "routePrefix": "/resources",
+    "language": "en",
+    "themeDefault": "system"
+  },
+  "social": {
+    "twitter": "@rightbrainai"
   },
   "directory": {
     "title": "Resources",
     "lede": "…",
-    "ctaHref": "/book-demo"
+    "ctaHref": "/book-demo",
+    "ctaButtonLabel": "Book Demo"
+  },
+  "post": {
+    "ctaTitle": "…",
+    "ctaDescription": "…",
+    "ctaHref": "/book-demo",
+    "ctaButtonLabel": "Book demo"
   }
 }
 ```
 
-If you ever move the blog from `/resources/` to `/blog/`, change `routePrefix` and rebuild — no template edits needed. The build rewrites all canonical URLs, sitemaps, and OG tags automatically.
-
-> **Note:** The Rightbrain task currently emits `/resources/<slug>/` in `card_html` hrefs. If you change `routePrefix`, `build.js` performs a single `String.replace` on each `card_html` to keep hrefs consistent.
+Change `routePrefix` and rebuild — canonical URLs, sitemaps, OG tags, and card links update automatically. No template edits required.
 
 ---
 
-## Inter font
+## Static assets
 
-The design uses Inter (variable, woff2), self-hosted for performance. You need to provide the font file:
+| Path | Purpose |
+|------|---------|
+| `public/logo.svg` | Header/footer logo |
+| `public/favicon.png` | Favicon (copied to `dist/favicon.png`) |
+| `public/slack-icon.png` | Slack button icon |
+| `public/fonts/inter-var.woff2` | Inter variable font (optional; see below) |
+| `public/images/<slug>/` | Post hero and inline images |
 
-1. Download `inter-var.woff2` from [rsms.me/inter](https://rsms.me/inter/) or [fonts.bunny.net](https://fonts.bunny.net/)
-2. Place it at `public/fonts/inter-var.woff2`
+### Inter font
 
-Until the file is present, the browser falls back to the system sans-serif stack (`system-ui, -apple-system, Segoe UI, Roboto`), which is visually close on most operating systems.
+Download `inter-var.woff2` from [rsms.me/inter](https://rsms.me/inter/) or [fonts.bunny.net](https://fonts.bunny.net/) and place at `public/fonts/inter-var.woff2`. Without it, the site uses the system sans-serif stack.
 
 ---
 
 ## Deployment
 
-The `dist/` folder is a fully self-contained static site. Deploy it to any static host:
+`dist/` is a fully static site. This repo includes **GitHub Pages** deploy via `.github/workflows/deploy.yml`:
 
-### Cloudflare Pages
+- Triggers on push to `main` when posts, templates, styles, scripts, `public/`, or `config.json` change
+- Runs `validate.js` then `build.js`, uploads `dist/` as the Pages artifact
 
-```bash
-npm run build
-# Then drag-and-drop dist/ in the Cloudflare Pages dashboard,
-# or configure it as the build output directory in the Pages project.
-```
+Enable **GitHub Pages** in the repo settings (source: **GitHub Actions**). The live URL follows `https://<user>.github.io/<repo>/` plus your `routePrefix` (e.g. `https://hgcam.github.io/rb-blog-test/` for the current staging config).
 
-### Vercel / Netlify
+### Other hosts
 
-Set the **build command** to `node scripts/build.js` and the **publish directory** to `dist`.
+**Cloudflare Pages / Vercel / Netlify** — build command: `node scripts/build.js`, publish directory: `dist`.
 
-### GitHub Pages / any CI
-
-```yaml
-# .github/workflows/deploy.yml (example)
-- run: node scripts/build.js
-  working-directory: blog
-- uses: actions/upload-pages-artifact@v3
-  with:
-    path: blog/dist
-```
+For a subdirectory on the main domain, set `routePrefix` to match (e.g. `/resources`) and deploy `dist/` behind that path.
 
 ---
 
 ## Post JSON contract
 
-Every file in `data/posts/` must match this structure (mirrors the Rightbrain task output exactly):
+Every file in `data/posts/` mirrors the Rightbrain task output:
 
 ```json
 {
   "post": {
     "slug": "my-post-slug",
     "title": "Full post title",
-    "subtitle": "Optional subtitle / lede sentence",
+    "subtitle": "Optional subtitle",
     "body_html": "<h2>…</h2><p>…</p>",
     "reading_time_minutes": 5,
-    "tags": ["Use Case", "Sales"],
+    "tags": ["case-study", "sales"],
     "published_at": "2025-04-15",
     "seo": {
       "meta_title": "Post title ≤60 chars",
       "meta_description": "Description ≤155 chars",
-      "og_image": "https://…/hero.jpg"
+      "og_image": "/rb-blog-test/public/images/my-post-slug/hero.png"
     }
   },
   "card": {
     "title": "Card title",
-    "summary": "One-sentence summary for the card",
+    "summary": "One-sentence summary",
     "card_html": "<article class=\"post-card\">…</article>"
   },
   "copyedit": {
@@ -200,17 +237,21 @@ Every file in `data/posts/` must match this structure (mirrors the Rightbrain ta
 }
 ```
 
-`body_html` constraints (enforced by `validate.js` and the Rightbrain task system prompt):
-- Only `h2`, `h3`, `h4` headings — no `h1` (the page already has one)
-- No `<style>` or `<script>` tags
+`body_html` constraints:
+
+- Only `h2`, `h3`, `h4` — no `h1` (the template provides the page title)
+- No `<style>` or `<script>`
 - No markdown artefacts (`**bold**`, `# Heading`, backtick fences)
+
+Use **kebab-case** tag slugs in JSON; the build formats them for display.
+
+Image paths in `og_image` and `body_html` should include `routePrefix` when hosted under a subpath (or use absolute URLs).
 
 ---
 
 ## Future enhancements (out of scope v1)
 
-- **Webhook receiver** — a small endpoint that accepts Rightbrain task forwarder POSTs, writes the JSON, and triggers a redeploy. The JSON contract is ready; no rework needed.
-- **Syntax highlighting** — drop in Shiki at build time; wrap `<pre><code>` blocks in `build.js`. Doesn't change the data contract.
-- **Search** — client-side JSON index (pagefind, fuse.js). The `data/posts/` folder is already structured for this.
-- **Analytics** — one-line snippet in `templates/layout.html`.
-- **Image CDN** — upload `post.seo.og_image` to Cloudflare Images or similar; update URL in the JSON.
+- **Webhook receiver** — `webhook/` contains a starter Cloudflare Worker; wire it to task forwarder POSTs for auto-ingest + redeploy.
+- **Syntax highlighting** — Shiki at build time for `<pre><code>` blocks.
+- **Search** — client-side index (Pagefind, Fuse.js) over `data/posts/`.
+- **Analytics** — snippet in `templates/layout.html`.

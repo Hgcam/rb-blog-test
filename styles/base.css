@@ -667,7 +667,7 @@ hr {
     height: auto;
     min-height: 44px;
     padding: var(--space-md) var(--space-lg);
-    justify-content: flex-start;
+    justify-content: center;
     gap: var(--space-lg);
   }
 
