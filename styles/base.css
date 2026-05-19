@@ -349,10 +349,6 @@ hr {
     justify-self: end;
     margin-left: 0;
   }
-
-  .site-header__actions .theme-toggle {
-    display: none;
-  }
 }
 
 /* ── Theme toggle button ─────────────────────────────── */
@@ -369,6 +365,28 @@ hr {
   color: var(--fg-tertiary);
   cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.theme-toggle--floating {
+  position: fixed;
+  bottom: var(--space-3xl);
+  left: var(--site-header-padding-mobile);
+  z-index: 200;
+  background-color: var(--bg-primary);
+  box-shadow: var(--shadow-md);
+}
+
+@media (min-width: 800px) {
+  .theme-toggle--floating {
+    left: var(--site-header-padding-tablet);
+    bottom: var(--space-4xl);
+  }
+}
+
+@media (min-width: 1280px) {
+  .theme-toggle--floating {
+    left: var(--site-header-padding-desktop);
+  }
 }
 
 .theme-toggle:hover {
